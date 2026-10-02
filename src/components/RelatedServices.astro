@@ -1,0 +1,58 @@
+---
+import { services } from '../config/services';
+
+interface Props {
+  currentHref: string;
+}
+
+const { currentHref } = Astro.props;
+
+const related = services.filter(s => s.href !== currentHref).slice(0, 3);
+---
+
+<section class="py-16 bg-slate-50/80 border-t border-slate-200/70">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="text-xs font-extrabold uppercase tracking-widest text-amber-600 bg-amber-100/70 px-3 py-1 rounded-full">
+        Explore Further
+      </span>
+      <h2 class="mt-3 text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        Other Essential Property Solutions
+      </h2>
+      <div class="w-12 h-1 bg-amber-500 mx-auto mt-3 rounded-full"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {related.map(item => (
+        <div class="bg-white rounded-3xl border border-[#ebdcc9] p-6 flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group">
+          <div>
+            <div class="w-full h-40 rounded-2xl bg-[#faf6ee] flex items-center justify-center p-3 mb-5 overflow-hidden border border-[#ebdcc9]/60 group-hover:scale-105 transition-transform duration-300">
+              <img src={item.icon} alt={item.name} class="max-h-full w-auto object-contain drop-shadow-md" width="120" height="120" loading="lazy" />
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors leading-snug mb-2">
+              {item.name}
+            </h3>
+            
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              {item.desc}
+            </p>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <a 
+              href={item.href} 
+              class="text-xs sm:text-sm font-bold text-slate-800 hover:text-amber-600 flex items-center gap-1 group-hover:underline"
+            >
+              Explore Solution
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+

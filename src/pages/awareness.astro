@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+---
+
+<BaseLayout 
+  title="Property Awareness & Educational Seminars | AKS Property Checklist"
+  description="Educating property owners across Tamil Nadu on land documents, patta transfer procedures, boundary verification, and fraud prevention through webinars and consultations."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://akspropertychecklist.in/" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://akspropertychecklist.in/#services" },
+      { "@type": "ListItem", "position": 3, "name": "Awareness", "item": "https://akspropertychecklist.in/awareness" }
+    ]
+  })} />
+
+  <Header />
+
+  <main class="py-12 md:py-20 bg-[#faf6ee]/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs font-bold text-slate-500 mb-8">
+        <a href="/" class="hover:text-amber-600">Home</a>
+        <span>/</span>
+        <a href="/#services" class="hover:text-amber-600">Services</a>
+        <span>/</span>
+        <span class="text-slate-800">Awareness</span>
+      </nav>
+
+      <!-- Hero Header with 3D Tile -->
+      <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-[#ebdcc9] mb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <span class="inline-block px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold uppercase tracking-wider mb-4">
+              Public Education Initiative
+            </span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+              Property Awareness &amp; Education
+            </h1>
+            <p class="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed">
+              An eye-opening initiative for anyone who owns, inherits, buys, or sells property. Even though revenue and legal regulations exist to safeguard citizens, widespread lack of procedural knowledge leads people to fall prey to misinformation, delays, and extortion by unscrupulous intermediaries. We bridge that gap through continuous education.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a 
+                href="https://www.youtube.com/@AKSPROPERTYCHECKLIST" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="px-8 py-3.5 text-sm font-extrabold text-white bg-red-600 hover:bg-red-700 rounded-full shadow-md transition-all flex items-center gap-2"
+              >
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                Watch Video Guides on YouTube
+              </a>
+              <a 
+                href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+                data-open-modal
+                data-service="Property Awareness & Consultation"
+                class="px-8 py-3.5 text-sm font-bold text-slate-800 bg-white hover:bg-amber-50 border border-[#ebdcc9] rounded-full shadow-sm transition-all"
+              >
+                Join Next Free Webinar
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex justify-center">
+            <div class="w-64 h-56 rounded-3xl bg-[#faf6ee] p-4 flex items-center justify-center border border-[#ebdcc9] shadow-lg">
+              <img 
+                src="/images/service-3d-awareness.webp" 
+                alt="Property Awareness & Education" 
+                class="w-full h-full object-contain drop-shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Channels of Awareness -->
+      <div class="space-y-8 mb-16">
+        
+        <!-- Channel 1: Social Media -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9]">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xl">
+              1
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900">Social Media Awareness Campaigns</h2>
+          </div>
+          <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+            We publish weekly bite-sized video explanations, infographics, and case breakdowns across <strong>YouTube, Instagram, Facebook, and LinkedIn</strong>. Topics cover reading Patta documents, understanding encumbrance certificates, checking FMB dimensions, and spotting red flags in land purchases.
+          </p>
+        </div>
+
+        <!-- Channel 2: Interactive Webinars -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9]">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xl">
+              2
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900">Live Webinars on Property Maintenance &amp; Transfer</h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="font-bold text-slate-900 text-sm mb-2">Core Educational Curriculum</h3>
+              <ul class="space-y-1.5 text-xs text-slate-600">
+                <li>• Step-by-step checklist before signing a sale agreement.</li>
+                <li>• How to check government gazettes for acquisition orders.</li>
+                <li>• Differences between UDR patta, natham patta, and manual patta.</li>
+                <li>• Safeguarding ancestral property rights against illegal partitions.</li>
+              </ul>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="font-bold text-slate-900 text-sm mb-2">Interactive Open Q&amp;A</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Every webinar concludes with an open floor where property owners ask specific questions regarding their current document hurdles and receive direct answers from our experts.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Channel 3: Consultations -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-white rounded-3xl p-8 shadow-sm border border-[#ebdcc9]">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xl">
+                3
+              </div>
+              <h2 class="text-xl font-bold text-slate-900">Online 1-on-1 Sessions</h2>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+              Dedicated 30–60 minute private video consultations for NRIs and out-of-town owners who want a confidential second opinion on their property papers.
+            </p>
+            <span class="inline-block px-3 py-1 bg-slate-100 text-slate-700 text-xs font-bold rounded-lg">Virtual via Zoom / Google Meet</span>
+          </div>
+
+          <div class="bg-white rounded-3xl p-8 shadow-sm border border-[#ebdcc9]">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xl">
+                4
+              </div>
+              <h2 class="text-xl font-bold text-slate-900">In-Person Office Advisory</h2>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+              Visit our Coimbatore headquarters for a face-to-face consultation with our revenue researchers, land advocates, and licensed survey engineers.
+            </p>
+            <span class="inline-block px-3 py-1 bg-slate-100 text-slate-700 text-xs font-bold rounded-lg">Coimbatore, Tamil Nadu</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <RelatedServices currentHref="/awareness" />
+  <CtaBanner />
+  <Footer />
+</BaseLayout>

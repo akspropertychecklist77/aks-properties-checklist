@@ -1,0 +1,183 @@
+---
+import { services } from '../config/services';
+---
+
+<header class="sticky top-0 z-50 bg-[#faf6ee]/95 backdrop-blur-md shadow-sm border-b border-[#ebdcc9]/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20 sm:h-24">
+      <!-- Brand Logo -->
+      <a href="/" class="flex items-center gap-3 group focus:outline-none">
+        <img 
+          src="/images/logo.png" 
+          alt="AKS Property Checklist" 
+          class="h-14 sm:h-18 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+          width="220"
+          height="75"
+        />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+        <a href="/" class="px-3 py-2 text-sm font-bold text-slate-800 hover:text-amber-600 rounded-md transition-colors">
+          Home
+        </a>
+        <a href="/#about" class="px-3 py-2 text-sm font-bold text-slate-800 hover:text-amber-600 rounded-md transition-colors">
+          About Us
+        </a>
+
+        <!-- Services Dropdown with 3D Thumbnails -->
+        <div class="relative group" id="services-dropdown-container">
+          <button 
+            type="button" 
+            id="services-dropdown-btn"
+            class="flex items-center gap-1 px-3 py-2 text-sm font-bold text-slate-800 hover:text-amber-600 rounded-md transition-colors focus:outline-none"
+            aria-expanded="false"
+          >
+            <span>Services</span>
+            <svg id="services-caret" class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <!-- Seamless hover bridge wrapper (top-full pt-2 ensures zero dead-zone gap) -->
+          <div 
+            id="services-dropdown-menu"
+            class="absolute left-0 top-full pt-2 w-96 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto [&.active]:opacity-100 [&.active]:translate-y-0 [&.active]:pointer-events-auto transition-all duration-200 z-50 before:content-[''] before:absolute before:-top-3 before:left-0 before:right-0 before:h-4"
+          >
+            <div class="rounded-2xl shadow-2xl bg-white border border-[#ebdcc9] p-3">
+              {services.map(item => (
+                <a 
+                  href={item.href} 
+                  class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-800 hover:bg-[#faf6ee] hover:text-amber-600 transition-colors group/item"
+                >
+                  <div class="w-10 h-10 rounded-lg bg-[#faf6ee] border border-[#ebdcc9]/60 flex items-center justify-center p-1 flex-shrink-0 group-hover/item:scale-110 transition-transform">
+                    <img src={item.icon} alt={item.name} class="w-full h-full object-contain" width="40" height="40" />
+                  </div>
+                  <span class="text-xs font-bold leading-snug">
+                    {item.name}
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <a href="/#test" class="px-3 py-2 text-sm font-bold text-slate-800 hover:text-amber-600 rounded-md transition-colors">
+          Testimonials
+        </a>
+        <a href="/blog" class="px-3 py-2 text-sm font-bold text-slate-800 hover:text-amber-600 rounded-md transition-colors">
+          Blog
+        </a>
+      </nav>
+
+      <!-- CTA Button -->
+      <div class="hidden md:flex items-center">
+        <a 
+          href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+          data-open-modal
+          class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-extrabold text-white bg-amber-500 hover:bg-amber-600 active:bg-amber-700 rounded-full shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5"
+        >
+          Contact Us
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex md:hidden">
+        <button 
+          id="mobile-menu-btn"
+          type="button" 
+          class="w-11 h-11 flex items-center justify-center rounded-xl text-slate-800 hover:bg-[#ebdcc9]/50 focus:outline-none focus:ring-2 focus:ring-amber-500" 
+          aria-label="Toggle Navigation Menu"
+        >
+          <svg id="menu-icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="menu-icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer with safe scrolling -->
+  <div 
+    id="mobile-menu" 
+    class="hidden md:hidden border-t border-[#ebdcc9] bg-white px-4 pt-3 pb-8 space-y-2 shadow-2xl max-h-[calc(100vh-5rem)] overflow-y-auto overscroll-contain"
+  >
+    <a href="/" class="block px-3 py-2 rounded-md text-base font-bold text-slate-800 hover:bg-amber-50 hover:text-amber-600">Home</a>
+    <a href="/#about" class="block px-3 py-2 rounded-md text-base font-bold text-slate-800 hover:bg-amber-50 hover:text-amber-600">About Us</a>
+    
+    <div class="pt-2 pb-1 border-t border-slate-100">
+      <div class="px-3 py-1 text-xs font-bold uppercase tracking-wider text-slate-600">Services</div>
+      <div class="pl-2 space-y-2 mt-2">
+        {services.map(item => (
+          <a href={item.href} class="flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-amber-50 hover:text-amber-700">
+            <img src={item.icon} alt={item.name} class="w-7 h-7 object-contain flex-shrink-0" width="28" height="28" />
+            <span>{item.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <a href="/#test" class="block px-3 py-2 rounded-md text-base font-bold text-slate-800 hover:bg-amber-50 hover:text-amber-600">Testimonials</a>
+    <a href="/blog" class="block px-3 py-2 rounded-md text-base font-bold text-slate-800 hover:bg-amber-50 hover:text-amber-600">Blog</a>
+    
+    <div class="pt-4">
+      <a 
+        href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+        data-open-modal
+        class="block w-full text-center px-4 py-3 text-base font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-xl shadow-md"
+      >
+        Contact Us
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-icon-open');
+  const closeIcon = document.getElementById('menu-icon-close');
+
+  if (btn && menu && openIcon && closeIcon) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      openIcon.classList.toggle('hidden');
+      closeIcon.classList.toggle('hidden');
+    });
+
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+      });
+    });
+  }
+
+  // Desktop Services dropdown click-to-toggle/hold support
+  const servicesBtn = document.getElementById('services-dropdown-btn');
+  const servicesMenu = document.getElementById('services-dropdown-menu');
+  const servicesCaret = document.getElementById('services-caret');
+
+  if (servicesBtn && servicesMenu) {
+    servicesBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isActive = servicesMenu.classList.toggle('active');
+      servicesBtn.setAttribute('aria-expanded', String(isActive));
+      if (servicesCaret) {
+        servicesCaret.classList.toggle('rotate-180', isActive);
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!servicesMenu.contains(e.target as Node) && !servicesBtn.contains(e.target as Node)) {
+        servicesMenu.classList.remove('active');
+        servicesBtn.setAttribute('aria-expanded', 'false');
+        if (servicesCaret) servicesCaret.classList.remove('rotate-180');
+      }
+    });
+  }
+</script>

@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+---
+
+<BaseLayout 
+  title="Property Maintenance Services | AKS Property Checklist"
+  description="Ground maintenance, periodic site visits, drone surveillance, boundary fencing, bush clearing, and digital survey for property owners across Tamil Nadu."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://akspropertychecklist.in/" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://akspropertychecklist.in/#services" },
+      { "@type": "ListItem", "position": 3, "name": "Property Maintenance", "item": "https://akspropertychecklist.in/property-maintenance" }
+    ]
+  })} />
+
+  <Header />
+
+  <main class="py-12 md:py-20 bg-[#faf6ee]/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs font-bold text-slate-500 mb-8">
+        <a href="/" class="hover:text-amber-600">Home</a>
+        <span>/</span>
+        <a href="/#services" class="hover:text-amber-600">Services</a>
+        <span>/</span>
+        <span class="text-slate-800">Property Maintenance</span>
+      </nav>
+
+      <!-- Hero Header with 3D Tile -->
+      <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-[#ebdcc9] mb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <span class="inline-block px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold uppercase tracking-wider mb-4">
+              On-Ground Protection
+            </span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+              Property Maintenance Services
+            </h1>
+            <p class="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed">
+              One of our most in-demand services, specifically designed for <strong>NRIs, property owners living in other cities, senior citizens, and families</strong>. Unattended vacant plots attract severe risks like encroachment, garbage dumping, fraudulent claims, and boundary shifting. We provide ongoing surveillance, maintenance, and digital accountability.
+            </p>
+            <div class="mt-8">
+              <a 
+                href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+                data-open-modal
+                data-service="Property Maintenance & Fencing"
+                class="inline-block px-8 py-3.5 text-sm font-extrabold text-white bg-amber-500 hover:bg-amber-600 rounded-full shadow-md hover:shadow-lg transition-all"
+              >
+                Protect Your Property Today
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex justify-center">
+            <div class="w-64 h-56 rounded-3xl bg-[#faf6ee] p-4 flex items-center justify-center border border-[#ebdcc9] shadow-lg">
+              <img 
+                src="/images/service-3d-maintenance.webp" 
+                alt="Property Maintenance Services" 
+                class="w-full h-full object-contain drop-shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Pillars -->
+      <div class="space-y-8 mb-16">
+        
+        <!-- Pillar 1: Regular Site Visits -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9]">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 font-extrabold text-xl">
+              1
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-slate-900">Regular Site Visits &amp; Live Video Calling</h2>
+              <p class="text-xs font-semibold text-amber-600 uppercase tracking-wider">Scheduled Inspection &amp; Direct Verification</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 space-y-3">
+              <h3 class="font-bold text-slate-900 text-base">Comprehensive Inspection</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                We inspect boundaries, compound walls, gates, and locks for signs of wear, illegal tampering, or unauthorized construction.
+              </p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Regular visits can be customized on a monthly, quarterly, or bi-annual basis tailored to client requirements.
+              </p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100 space-y-3">
+              <h3 class="font-bold text-slate-900 text-base">Client Reporting &amp; Live Streaming</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                During each visit, high-resolution photo and video logs are recorded and sent directly to the client via WhatsApp/Email.
+              </p>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                We also arrange scheduled <strong>live video calls</strong> directly from your plot so you can inspect ground status in real time.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Cleaning, Fencing & Repairs -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9]">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600 font-extrabold text-xl">
+              2
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-slate-900">Cleaning, Fencing &amp; Signboards</h2>
+              <p class="text-xs font-semibold text-orange-600 uppercase tracking-wider">Physical Fortification &amp; Upkeep</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="font-bold text-slate-900 text-base mb-2">Weed &amp; Bush Clearing</h3>
+              <p class="text-sm text-slate-600">
+                Thorough clearing of wild vegetation, thorny bushes, and debris using manual teams or JCB equipment to keep the land pristine.
+              </p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="font-bold text-slate-900 text-base mb-2">Protective Fencing</h3>
+              <p class="text-sm text-slate-600">
+                Installation of robust barbed wire fencing, chain-link mesh, or pre-cast concrete boundary walls with stone pillars.
+              </p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="font-bold text-slate-900 text-base mb-2">Ownership Signboards</h3>
+              <p class="text-sm text-slate-600">
+                Prominently displaying "Private Property - Trespassers Will Be Prosecuted" boards with contact info to prevent encroachers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Digital Survey -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9]">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 font-extrabold text-xl">
+              3
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-slate-900">Digital GPS Land Survey &amp; Geo-Mapping</h2>
+              <p class="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Millimeter-Accurate Boundary Records</p>
+            </div>
+          </div>
+          <p class="text-sm sm:text-base text-slate-600 leading-relaxed mb-6">
+            Traditional land measurement tape creates errors that cause boundary disputes. We deploy licensed surveyors using advanced <strong>Differential GPS (DGPS) and Electronic Total Station (ETS)</strong> technology.
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
+              <span class="block font-bold text-slate-800 text-sm mb-1">GPS Coordinates</span>
+              <p class="text-xs text-slate-500">Exact geo-coordinates recorded for every corner marker stone.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
+              <span class="block font-bold text-slate-800 text-sm mb-1">FMB Alignment</span>
+              <p class="text-xs text-slate-500">Cross-matched directly with official Village FMB sketches.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
+              <span class="block font-bold text-slate-800 text-sm mb-1">AutoCAD Maps</span>
+              <p class="text-xs text-slate-500">Digital architectural drawings delivered in PDF/DWG format.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
+              <span class="block font-bold text-slate-800 text-sm mb-1">Boundary Fixation</span>
+              <p class="text-xs text-slate-500">Permanent stone planting to eliminate neighbor encroaching.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <RelatedServices currentHref="/property-maintenance" />
+  <CtaBanner />
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,84 @@
+---
+---
+
+<section class="py-16 md:py-24 bg-white border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <span class="text-xs font-extrabold uppercase tracking-widest text-amber-600 bg-amber-100/70 px-3 py-1 rounded-full">
+        Geographic Reach
+      </span>
+      <h2 class="mt-3 text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        Service Area
+      </h2>
+      <p class="mt-4 text-base sm:text-lg text-slate-600">
+        Providing end-to-end property document verification, legal clearance, and field maintenance across Tamil Nadu.
+      </p>
+      <div class="w-16 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
+    </div>
+
+    <!-- Dual Video Showcase -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+      
+      <!-- Video 1: Buffer Zone Tamil Nadu -->
+      <div class="rounded-3xl overflow-hidden shadow-xl border-4 border-amber-100 bg-slate-950 aspect-video relative group">
+        <video 
+          class="w-full h-full object-cover lazy-video" 
+          muted 
+          loop 
+          playsinline
+          preload="none"
+        >
+          <source data-src="/videos/buffer-zone.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Video 2: Company Brand Showcase -->
+      <div class="rounded-3xl overflow-hidden shadow-xl border-4 border-amber-100 bg-slate-950 aspect-video relative group">
+        <video 
+          class="w-full h-full object-cover lazy-video" 
+          muted 
+          loop 
+          playsinline
+          preload="none"
+        >
+          <source data-src="/videos/akspropertychecklist.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  // Lazy-load videos only when scrolling near viewport to save 20MB+ mobile data
+  const lazyVideos = document.querySelectorAll<HTMLVideoElement>('video.lazy-video');
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const video = entry.target as HTMLVideoElement;
+          const source = video.querySelector<HTMLSourceElement>('source');
+          if (source && source.dataset.src) {
+            source.src = source.dataset.src;
+            video.load();
+            video.play().catch(() => {});
+          }
+          observer.unobserve(video);
+        }
+      });
+    }, { rootMargin: '300px 0px' });
+
+    lazyVideos.forEach(video => videoObserver.observe(video));
+  } else {
+    lazyVideos.forEach(video => {
+      const source = video.querySelector<HTMLSourceElement>('source');
+      if (source && source.dataset.src) {
+        source.src = source.dataset.src;
+        video.load();
+        video.play().catch(() => {});
+      }
+    });
+  }
+</script>

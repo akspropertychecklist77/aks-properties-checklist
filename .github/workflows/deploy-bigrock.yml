@@ -1,0 +1,37 @@
+name: Deploy to BigRock cPanel via FTP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  web-deploy:
+    name: Build & Deploy to BigRock
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Static Site
+        run: npm run build
+
+      - name: 🚀 Sync Files to BigRock cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp.akspropertychecklist.in
+          username: bigrock@akspropertychecklist.in
+          password: Akgunman@123
+          server-dir: public_html/
+          local-dir: dist/
+          dangerous-clean-slate: false # Set to true only if you want to delete orphaned old files on server

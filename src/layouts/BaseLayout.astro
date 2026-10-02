@@ -1,0 +1,89 @@
+---
+import '../styles/global.css';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import EnquiryModal from '../components/EnquiryModal.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "AKS Property Checklist | PROPERTY LEGAL DUE DILIGENCE (Revenue & Legal Areas)",
+  description = "Coimbatore based startup helping property owners maintain property documents, revenue records, patta transfer, legal opinions, and physical property maintenance across Tamil Nadu."
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://akspropertychecklist.in');
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <meta name="theme-color" content="#f8efe6" />
+    
+    <!-- OpenGraph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AKS Property Checklist" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://akspropertychecklist.in/images/hero-property-wheel.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://akspropertychecklist.in/images/hero-property-wheel.webp" />
+
+    <!-- Structured Data (JSON-LD) for Search Engines -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LegalService",
+        "name": "AKS Property Checklist",
+        "alternateName": "AKSPCL",
+        "url": "https://akspropertychecklist.in",
+        "logo": "https://akspropertychecklist.in/images/logo.png",
+        "image": "https://akspropertychecklist.in/images/hero-property-wheel.webp",
+        "telephone": "+919363106310",
+        "priceRange": "₹₹",
+        "description": "Systematic property legal due diligence, patta transfer, 100-year title opinion, and on-ground property maintenance across Tamil Nadu.",
+        "founder": {
+          "@type": "Person",
+          "name": "A.K. Saravanan",
+          "jobTitle": "Advocate (M.E. Energy, LLB)"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Coimbatore",
+          "addressRegion": "Tamil Nadu",
+          "addressCountry": "IN"
+        },
+        "areaServed": "Tamil Nadu, India",
+        "sameAs": [
+          "https://www.facebook.com/akspropertychecklist",
+          "https://x.com/AKSPROPERTYCL",
+          "https://www.linkedin.com/in/saravanan-a-k/",
+          "https://www.youtube.com/@AKSPROPERTYCHECKLIST",
+          "https://www.instagram.com/akspropertychecklist/?hl=en"
+        ]
+      }
+    </script>
+
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-white text-slate-800 antialiased selection:bg-amber-100 selection:text-amber-900">
+    <slot />
+    <WhatsAppButton />
+    <EnquiryModal />
+  </body>
+</html>
+

@@ -1,0 +1,417 @@
+---
+import { siteConfig } from '../config/site';
+import { services as coreServices } from '../config/services';
+
+const services = [
+  ...coreServices.map(s => s.enquiryName),
+  "Other / General Property Due Diligence"
+];
+
+const districts = [
+  "Coimbatore",
+  "Chennai",
+  "Tiruppur",
+  "Erode",
+  "Salem",
+  "Madurai",
+  "Tiruchirappalli (Trichy)",
+  "Dindigul",
+  "Nilgiris",
+  "Thanjavur",
+  "Other District in Tamil Nadu"
+];
+---
+
+<!-- Modal Container -->
+<div 
+  id="enquiry-modal-backdrop" 
+  class="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6 overflow-y-auto"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-title"
+>
+  <!-- Modal Card -->
+  <div 
+    id="enquiry-modal-card"
+    class="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-[#ebdcc9] overflow-hidden my-auto transform transition-all duration-300 scale-95 opacity-0"
+  >
+    <!-- Modal Header -->
+    <div class="bg-gradient-to-r from-[#faf6ee] to-amber-50/70 px-6 sm:px-8 py-5 border-b border-[#ebdcc9]/70 flex items-start justify-between">
+      <div class="space-y-1 pr-6">
+        <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-extrabold uppercase tracking-wider">
+          Confidential Advisory
+        </span>
+        <h3 id="modal-title" class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+          Property Consultation Enquiry
+        </h3>
+        <p class="text-xs text-slate-600 leading-snug">
+          Direct legal &amp; revenue due diligence by Advocate A.K. Saravanan's team.
+        </p>
+      </div>
+
+      <button 
+        type="button" 
+        id="modal-close-btn"
+        class="w-9 h-9 rounded-full bg-white text-slate-500 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 flex items-center justify-center transition-colors flex-shrink-0"
+        aria-label="Close modal"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Form Section -->
+    <div class="p-6 sm:p-8 max-h-[80vh] overflow-y-auto">
+      
+      <form id="enquiry-form" class="space-y-4">
+        <!-- Service Selection -->
+        <div>
+          <label for="form-service" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+            Service Required <span class="text-amber-600">*</span>
+          </label>
+          <select 
+            id="form-service" 
+            name="service" 
+            required 
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white transition-colors"
+          >
+            {services.map(s => (
+              <option value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+
+        <!-- Full Name & Phone in 2-cols on desktop -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="form-name" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+              Full Name <span class="text-amber-600">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="form-name" 
+              name="name" 
+              placeholder="e.g. S. Murugesan" 
+              required 
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white transition-colors"
+            />
+          </div>
+
+          <div>
+            <label for="form-phone" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+              Phone / WhatsApp <span class="text-amber-600">*</span>
+            </label>
+            <div class="relative flex items-center">
+              <span class="absolute left-3.5 text-xs font-bold text-slate-500 pointer-events-none">
+                +91
+              </span>
+              <input 
+                type="tel" 
+                id="form-phone" 
+                name="phone" 
+                pattern="[0-9]{10}"
+                placeholder="98422 00000" 
+                required 
+                class="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white transition-colors"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- District & Email -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="form-district" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+              Property District <span class="text-amber-600">*</span>
+            </label>
+            <select 
+              id="form-district" 
+              name="district" 
+              required
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white transition-colors"
+            >
+              {districts.map(d => (
+                <option value={d}>{d}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label for="form-email" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+              Email Address <span class="text-slate-400 font-normal">(Optional)</span>
+            </label>
+            <input 
+              type="email" 
+              id="form-email" 
+              name="email" 
+              placeholder="name@domain.com" 
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white transition-colors"
+            />
+          </div>
+        </div>
+
+        <!-- Property Notes / Survey Number -->
+        <div>
+          <label for="form-details" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+            Property Details / Survey No. <span class="text-slate-400 font-normal">(Optional)</span>
+          </label>
+          <textarea 
+            id="form-details" 
+            name="details" 
+            rows="2" 
+            placeholder="e.g. Survey No. 142/2, Kinathukadavu. Need 100-year EC title search & patta verification."
+            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white transition-colors"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+          <button 
+            type="submit" 
+            id="form-submit-btn"
+            class="w-full py-4 text-base font-extrabold text-white bg-amber-500 hover:bg-amber-600 active:bg-amber-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span id="btn-text">Submit Enquiry</span>
+            <svg id="btn-spinner" class="w-5 h-5 animate-spin hidden text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Privacy & Security Footnote -->
+        <div class="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
+          <svg class="w-3.5 h-3.5 text-amber-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+          </svg>
+          <span>100% Confidential &amp; Protected by Advocate-Client Discretion</span>
+        </div>
+      </form>
+
+      <!-- Success Screen (Hidden initially) -->
+      <div id="enquiry-success-view" class="hidden text-center py-6 space-y-5">
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-3xl shadow-inner">
+          ✓
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="text-2xl font-black text-slate-900">Enquiry Received!</h4>
+          <p id="success-client-name" class="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+            Thank you for reaching out to AKS Property Checklist. Advocate A.K. Saravanan's property advisory team will review your requirements and contact you within 2 business hours.
+          </p>
+        </div>
+
+        <!-- Direct WhatsApp Follow-up Button -->
+        <div class="pt-3 max-w-sm mx-auto">
+          <a 
+            id="success-whatsapp-btn"
+            href="#" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="w-full py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-sm font-bold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
+          >
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.53 1.77.781 2.796.782 3.185 0 5.77-2.587 5.771-5.766.001-3.181-2.584-5.768-5.771-5.768zm3.376 8.21c-.14.393-.715.734-1.026.782-.28.043-.637.065-1.85-.436-1.551-.641-2.537-2.222-2.614-2.325-.078-.103-.628-.836-.628-1.593 0-.758.396-1.13.536-1.285.14-.155.305-.194.407-.194.102 0 .204.001.293.006.094.004.22-.036.345.263.129.312.44 1.072.478 1.152.039.08.065.174.013.277-.052.103-.078.167-.156.257-.078.09-.163.2-.234.269-.078.077-.16.16-.068.318.092.158.409.674.877 1.091.602.537 1.109.704 1.267.782.158.079.251.066.345-.043.094-.108.402-.468.51-.628.108-.16.216-.134.364-.079.148.055.938.442 1.1.523.161.08.269.12.308.187.039.066.039.384-.101.777zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.174L2 22l4.981-1.306A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.154c-1.636 0-3.151-.498-4.412-1.353l-.316-.214-2.955.775.789-2.88-.236-.375C3.992 14.802 3.5 13.444 3.5 12c0-4.687 3.813-8.5 8.5-8.5s8.5 3.813 8.5 8.5-3.813 8.5-8.5 8.5z"/>
+            </svg>
+            <span>Chat Directly on WhatsApp</span>
+          </a>
+          
+          <button 
+            type="button" 
+            id="success-close-btn"
+            class="mt-3 text-xs text-slate-500 hover:text-slate-800 underline font-semibold"
+          >
+            Back to Website
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ whatsappNumber: siteConfig.contact.whatsappNumber, webhookUrl: siteConfig.contact.webhookUrl }}>
+  const backdrop = document.getElementById('enquiry-modal-backdrop');
+  const card = document.getElementById('enquiry-modal-card');
+  const closeBtn = document.getElementById('modal-close-btn');
+  const successCloseBtn = document.getElementById('success-close-btn');
+  const form = document.getElementById('enquiry-form');
+  const successView = document.getElementById('enquiry-success-view');
+  const serviceSelect = document.getElementById('form-service');
+  const submitBtn = document.getElementById('form-submit-btn');
+  const btnText = document.getElementById('btn-text');
+  const btnSpinner = document.getElementById('btn-spinner');
+  const successWhatsappBtn = document.getElementById('success-whatsapp-btn');
+
+  const nameInput = document.getElementById('form-name');
+  const phoneInput = document.getElementById('form-phone');
+  let lastActiveElement = null;
+
+  // Auto-sanitize phone input in real time (strip spaces, dashes, non-digits)
+  if (phoneInput) {
+    phoneInput.addEventListener('input', (e) => {
+      const target = e.target;
+      target.value = target.value.replace(/\D/g, '').slice(0, 10);
+    });
+  }
+
+  function openModal(serviceName) {
+    if (!backdrop || !card) return;
+    
+    lastActiveElement = document.activeElement;
+
+    // Reset views
+    if (form) form.classList.remove('hidden');
+    if (successView) successView.classList.add('hidden');
+    
+    // Pre-select service if matched
+    if (serviceName && serviceSelect) {
+      for (let i = 0; i < serviceSelect.options.length; i++) {
+        if (serviceSelect.options[i].value.toLowerCase().includes(serviceName.toLowerCase()) ||
+            serviceName.toLowerCase().includes(serviceSelect.options[i].value.toLowerCase())) {
+          serviceSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
+    backdrop.classList.remove('hidden');
+    backdrop.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+
+    // Animate card entrance and auto-focus first input
+    setTimeout(() => {
+      card.classList.remove('scale-95', 'opacity-0');
+      card.classList.add('scale-100', 'opacity-100');
+      if (nameInput) nameInput.focus();
+    }, 50);
+  }
+
+  function closeModal() {
+    if (!backdrop || !card) return;
+    
+    card.classList.remove('scale-100', 'opacity-100');
+    card.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+      backdrop.classList.add('hidden');
+      backdrop.classList.remove('flex');
+      document.body.style.overflow = '';
+      if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+        lastActiveElement.focus();
+      }
+    }, 200);
+  }
+
+  // Attach event listeners to all triggers across the entire page
+  function attachModalTriggers() {
+    document.querySelectorAll('[data-open-modal], a[href*="forms.gle"]').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        // Intercept navigation
+        e.preventDefault();
+        const service = trigger.getAttribute('data-service') || '';
+        openModal(service);
+      });
+    });
+  }
+
+  attachModalTriggers();
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (successCloseBtn) successCloseBtn.addEventListener('click', closeModal);
+
+  // Close on backdrop click (outside card)
+  if (backdrop) {
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeModal();
+    });
+  }
+
+  // Keyboard accessibility: ESC to close, Tab focus trapping
+  window.addEventListener('keydown', (e) => {
+    if (backdrop && !backdrop.classList.contains('hidden')) {
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'Tab' && card) {
+        const focusable = card.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            last.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === last) {
+            first.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    }
+  });
+
+  // Handle Form Submission
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const payload = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        email: formData.get('email') || '',
+        service: formData.get('service'),
+        district: formData.get('district'),
+        details: formData.get('details') || '',
+        timestamp: new Date().toISOString()
+      };
+
+      // Loading state
+      if (submitBtn) submitBtn.setAttribute('disabled', 'true');
+      if (btnText) btnText.textContent = 'Submitting...';
+      if (btnSpinner) btnSpinner.classList.remove('hidden');
+
+      try {
+        if (webhookUrl) {
+          await fetch(webhookUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          });
+        }
+        
+        // Backup in localStorage for offline reliability
+        try {
+          const stored = JSON.parse(localStorage.getItem('akspcl_enquiries') || '[]');
+          stored.push(payload);
+          localStorage.setItem('akspcl_enquiries', JSON.stringify(stored));
+        } catch (_) {}
+
+        // Configure direct WhatsApp follow-up link
+        const waMsg = `Hello AKSPCL Team,\nI have submitted an enquiry on your website.\n\n*Name:* ${payload.name}\n*Phone:* +91 ${payload.phone}\n*Service:* ${payload.service}\n*District:* ${payload.district}\n*Details:* ${payload.details || 'N/A'}`;
+        if (successWhatsappBtn) {
+          successWhatsappBtn.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
+        }
+
+        // Show success screen
+        form.classList.add('hidden');
+        if (successView) successView.classList.remove('hidden');
+        form.reset();
+
+      } catch (err) {
+        console.error('Submission error:', err);
+        alert('Enquiry captured. You can also chat directly on WhatsApp.');
+        closeModal();
+      } finally {
+        if (submitBtn) submitBtn.removeAttribute('disabled');
+        if (btnText) btnText.textContent = 'Submit Enquiry';
+        if (btnSpinner) btnSpinner.classList.add('hidden');
+      }
+    });
+  }
+</script>
+

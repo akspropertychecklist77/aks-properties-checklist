@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+---
+
+<BaseLayout 
+  title="Revenue & Legal Issues Management | AKS Property Checklist"
+  description="Expert resolution of land revenue disputes, Patta transfer delays, boundary mismatches, court litigations, and title discrepancies across Tamil Nadu."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://akspropertychecklist.in/" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://akspropertychecklist.in/#services" },
+      { "@type": "ListItem", "position": 3, "name": "Revenue and Legal Issues Management", "item": "https://akspropertychecklist.in/revenue-and-legal-issues-management" }
+    ]
+  })} />
+
+  <Header />
+
+  <main class="py-12 md:py-20 bg-[#faf6ee]/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs font-bold text-slate-500 mb-8">
+        <a href="/" class="hover:text-amber-600">Home</a>
+        <span>/</span>
+        <a href="/#services" class="hover:text-amber-600">Services</a>
+        <span>/</span>
+        <span class="text-slate-800">Revenue and Legal Issues Management</span>
+      </nav>
+
+      <!-- Hero Header with 3D Tile -->
+      <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-[#ebdcc9] mb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <span class="inline-block px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold uppercase tracking-wider mb-4">
+              Dispute &amp; Compliance Advisory
+            </span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+              Revenue and Legal Issues Management
+            </h1>
+            <p class="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed">
+              A crucial, need-of-the-hour advisory service designed to resolve discrepancies between government departments, corporate bodies, and private individuals. We address title mismatches, revenue record delays, survey errors, boundary overlap disputes, and legal hurdles systematically.
+            </p>
+            <div class="mt-8">
+              <a 
+                href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+                data-open-modal
+                data-service="Revenue and Legal Issues Management"
+                class="inline-block px-8 py-3.5 text-sm font-extrabold text-white bg-amber-500 hover:bg-amber-600 rounded-full shadow-md hover:shadow-lg transition-all"
+              >
+                Consult With Our Legal Experts
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex justify-center">
+            <div class="w-64 h-56 rounded-3xl bg-[#faf6ee] p-4 flex items-center justify-center border border-[#ebdcc9] shadow-lg">
+              <img 
+                src="/images/service-3d-revenue-issues.webp" 
+                alt="Revenue and Legal Issues Management" 
+                class="w-full h-full object-contain drop-shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Two Pillars: Revenue Issues & Legal Issues -->
+      <div class="space-y-12 mb-16">
+        
+        <!-- Pillar 1: Revenue Issues -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9]">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 font-extrabold text-xl">
+              1
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-slate-900">Identifying &amp; Resolving Revenue Issues</h2>
+              <p class="text-xs font-semibold text-amber-600 uppercase tracking-wider">Patta, Chitta, A-Register &amp; Land Classification</p>
+            </div>
+          </div>
+          <p class="text-sm sm:text-base text-slate-600 mb-8 leading-relaxed">
+            Revenue issues typically arise from mismatches in land measurement, survey sub-divisions, missing patta name transfers, unregularized layout conversions, or tax backlog entries.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="text-base font-bold text-slate-900 mb-3 text-amber-700">Identification Process</h3>
+              <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+                <li>• Cross-examination of Patta, Chitta, and Village ‘A’ Register records.</li>
+                <li>• Verification of Field Measurement Book (FMB) sketches against physical survey.</li>
+                <li>• Identification of sub-division errors or overlapping survey numbers.</li>
+                <li>• Land ceiling, Inam land, and government acquisition gazette checks.</li>
+              </ul>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="text-base font-bold text-slate-900 mb-3 text-amber-700">Resolution Roadmap</h3>
+              <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+                <li>• Drafting and submission of formal petitions to the Tahsildar / VAO.</li>
+                <li>• Appeal petitions before Revenue Divisional Officers (RDO) and District Collectors.</li>
+                <li>• Re-survey representation with certified government revenue surveyors.</li>
+                <li>• Regularization of joint patta into individual computerized patta.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 2: Legal Issues -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9]">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600 font-extrabold text-xl">
+              2
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold text-slate-900">Identifying &amp; Resolving Legal Issues</h2>
+              <p class="text-xs font-semibold text-indigo-600 uppercase tracking-wider">Litigation, Title Encumbrance &amp; Ownership Rights</p>
+            </div>
+          </div>
+          <p class="text-sm sm:text-base text-slate-600 mb-8 leading-relaxed">
+            Legal issues typically arise from competing ownership claims, fraudulent registrations, unregistered wills, undisclosed co-heir disputes, or pending court injunctions.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="text-base font-bold text-slate-900 mb-3 text-indigo-700">Identification Process</h3>
+              <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+                <li>• Comprehensive 100-year Encumbrance Certificate (EC) audit.</li>
+                <li>• Deep tracing of parent title chain across ancestral partitions and settlements.</li>
+                <li>• Litigation checks across District Munsif Courts, Sub-Courts, and High Court.</li>
+                <li>• Bank mortgage, DRT orders, and execution petition searches.</li>
+              </ul>
+            </div>
+
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+              <h3 class="text-base font-bold text-slate-900 mb-3 text-indigo-700">Resolution Roadmap</h3>
+              <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+                <li>• Negotiated out-of-court family settlements and partition agreements.</li>
+                <li>• Execution of registered Rectification Deeds or Confirmation Deeds.</li>
+                <li>• Legal proceedings for cancellation of forged or double registrations under Section 77A.</li>
+                <li>• Strategic defense and prosecution in civil suits for declaration of title.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar 3: Preventive Measures -->
+        <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9]">
+          <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">🛡</span>
+            Preventive Measures for Long-Term Protection
+          </h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
+              <span class="block text-amber-500 font-extrabold text-lg mb-1">01</span>
+              <h4 class="font-bold text-slate-800 text-xs uppercase mb-1">Patta in Your Name</h4>
+              <p class="text-xs text-slate-500">Ensure patta is transferred immediately post-purchase.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
+              <span class="block text-amber-500 font-extrabold text-lg mb-1">02</span>
+              <h4 class="font-bold text-slate-800 text-xs uppercase mb-1">Periodic EC Checks</h4>
+              <p class="text-xs text-slate-500">Check online EC annually to detect bogus entries early.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
+              <span class="block text-amber-500 font-extrabold text-lg mb-1">03</span>
+              <h4 class="font-bold text-slate-800 text-xs uppercase mb-1">Boundary Fencing</h4>
+              <p class="text-xs text-slate-500">Physical stone demarcation and fencing prevent encroachments.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 text-center">
+              <span class="block text-amber-500 font-extrabold text-lg mb-1">04</span>
+              <h4 class="font-bold text-slate-800 text-xs uppercase mb-1">Timely Tax Dues</h4>
+              <p class="text-xs text-slate-500">Keep local property tax and land revenue receipts current.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <RelatedServices currentHref="/revenue-and-legal-issues-management" />
+  <CtaBanner />
+  <Footer />
+</BaseLayout>

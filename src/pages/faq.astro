@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+
+const faqs = [
+  {
+    q: "How do you identify and resolve property issues?",
+    a: "We have a specialized team of in-house and on-call experts from both the Revenue and Legal departments. We follow a unique, systematic audit process—identifying document discrepancies, cross-matching revenue field books, and working directly with the competent authorities to resolve title bottlenecks cleanly."
+  },
+  {
+    q: "Can you identify and locate non-traceable properties anywhere in Tamil Nadu?",
+    a: "Yes. Our operations cover all 38 districts of Tamil Nadu. Whether your land is agricultural acreage in Thanjavur, a residential plot in Coimbatore, or ancestral property in Madurai, our field survey and revenue teams can track and pinpoint it."
+  },
+  {
+    q: "What documents are required to begin identifying my property?",
+    a: "Your primary registered Title Deed is typically the base document. However, even if you only have a village survey number or the GPS latitude/longitude of the property, we can retrieve certified archival copies and reconstruct your document trail."
+  },
+  {
+    q: "What is the difference between Standard, Advanced, and Premium Legal Opinions?",
+    a: "Standard verifies title and encumbrances for 45 years online. Advanced covers 100 years of online plus manual sub-registrar certified records, government revenue cross-matching, physical boundary survey, and market valuation. Premium adds multi-court litigation searches across civil courts, high courts, and tribunals to ensure dispute immunity."
+  },
+  {
+    q: "How long does it take to correct a Patta error or resolve revenue issues?",
+    a: "Simple computerized patta name corrections or online mutation updates typically take 15 to 30 working days. Complex sub-division rectifications, joint-patta separations, or appeal petitions before the RDO/District Collector may take longer depending on government hearing schedules."
+  },
+  {
+    q: "How does property maintenance work for NRIs or remote property owners?",
+    a: "We conduct periodic scheduled inspections (monthly, quarterly, or bi-annually). During each visit, we inspect boundary fencing, locks, and check for encroachments. We record high-resolution photos/videos, provide live video calls directly from the plot, and facilitate weed clearing, fencing, and digital GPS demarcation."
+  },
+  {
+    q: "How do you help clients buy and sell properties without fraud?",
+    a: "Ordinary buyers face 10 exhausting stages: property hunting, inspection, negotiation, advances, legal scrutiny, bank loans, deed drafts, registration, and patta transfer. We handle Stages 1 to 7 directly, guide Stages 8 and 9, and execute Stage 10 (revenue name transfer). Every property we represent is guaranteed legally clear."
+  },
+  {
+    q: "Why do so many landowners face delays in government revenue offices?",
+    a: "Procedural lack of awareness leads many owners to approach middlemen who make false promises and inflate expenses. At AKS Property Checklist, our legal advocates and revenue consultants provide transparent, direct institutional processing that saves you time, money, and emotional stress."
+  }
+];
+---
+
+<BaseLayout 
+  title="Frequently Asked Questions (FAQ) | AKS Property Checklist"
+  description="Answers to common questions regarding land records, Patta transfers, 100-year legal opinions, property maintenance for NRIs, and land identification in Tamil Nadu."
+>
+  <!-- Google Rich Snippet: FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.a
+      }
+    }))
+  })} />
+
+  <Header />
+
+  <main class="py-12 md:py-20 bg-slate-50/50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-8">
+        <a href="/" class="hover:text-amber-600">Home</a>
+        <span>/</span>
+        <span class="text-slate-800">FAQ</span>
+      </nav>
+
+      <!-- Hero Header -->
+      <div class="text-center mb-16">
+        <span class="inline-block px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold uppercase tracking-wider mb-4">
+          Got Questions?
+        </span>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+          Frequently Asked Questions
+        </h1>
+        <p class="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+          Clear, straightforward answers about our legal verification, revenue management, and property protection services across Tamil Nadu.
+        </p>
+        <div class="w-16 h-1 bg-amber-500 mx-auto mt-6 rounded-full"></div>
+      </div>
+
+      <!-- FAQ Accordion List -->
+      <div class="space-y-4 mb-16">
+        {faqs.map((item, idx) => (
+          <details class="group bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden transition-all duration-200 open:border-amber-400 open:shadow-md">
+            <summary class="flex items-center justify-between p-6 text-left cursor-pointer list-none select-none font-bold text-base sm:text-lg text-slate-800 group-hover:text-amber-600">
+              <span>{item.q}</span>
+              <span class="w-8 h-8 rounded-full bg-slate-100 group-open:bg-amber-100 group-open:text-amber-600 flex items-center justify-center text-slate-500 transition-transform duration-200 group-open:rotate-180 flex-shrink-0 ml-4">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </summary>
+            <div class="px-6 pb-6 pt-2 text-sm sm:text-base text-slate-600 leading-relaxed border-t border-slate-100 mt-2">
+              {item.a}
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <!-- Bottom Card -->
+      <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-100 shadow-sm text-center">
+        <h3 class="text-xl font-bold text-slate-900">Have a specific question about your property?</h3>
+        <p class="mt-2 text-sm text-slate-600">
+          Our senior consultants are available to evaluate your documents and provide clarity.
+        </p>
+        <div class="mt-6">
+          <a 
+            href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-block px-8 py-3 text-sm font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-xl shadow-md transition-all"
+          >
+            Ask An Expert Directly
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <CtaBanner />
+  <Footer />
+</BaseLayout>
+

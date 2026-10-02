@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+
+const packages = [
+  {
+    tier: "Standard",
+    badge: "Quick Check",
+    bestFor: "Buyers and Sellers who are looking for a quick and basic property check to ensure clear ownership and verify recent disputes.",
+    ecYears: "45 Years Online EC",
+    features: [
+      "Encumbrance Certificate (EC) Verification for 45 years",
+      "Title Deed and Ownership Verification",
+      "Basic Revenue Records Check (Patta, FMB extraction)",
+      "Confirm no active bank liens or registered encumbrances"
+    ],
+    deliverable: "Essential legal opinion certificate highlighting current ownership status and property transfer history from parent documents.",
+    highlight: false
+  },
+  {
+    tier: "Advanced",
+    badge: "Most Popular",
+    bestFor: "Buyers, Sellers, or Investors who need a thorough, deep-dive analysis of the property's historical legality and true financial valuation.",
+    ecYears: "100 Years (Online + Manual)",
+    features: [
+      "Encumbrance Certificate (EC) Verification for full 100 years",
+      "Certified copies analysis across departmental archives",
+      "Detailed Government Revenue Verification (Patta, FMB, A-Register, RSR)",
+      "Zoning compliance & conversion status check (LPA)",
+      "Comprehensive Property Market Valuation Study",
+      "Physical boundary and Land Survey assistance with neighbours enquiry"
+    ],
+    deliverable: "Detailed legal report with multi-document forensic analysis, valuation insights, and actionable clearance recommendations.",
+    highlight: true
+  },
+  {
+    tier: "Premium",
+    badge: "Comprehensive",
+    bestFor: "High-value transactions, Corporate buyers, NRIs, and properties with complex legal/revenue histories or inheritance disputes.",
+    ecYears: "100 Years + Court Litigations",
+    features: [
+      "All Advanced Tier features included",
+      "Legal Cases Verification across Civil Courts, High Court & Tribunals",
+      "Comprehensive Title & Lineage review for potential 3rd party claims",
+      "DGPS / Drone survey boundary mapping & encroachment check ( ON DEMAND )",
+      "Professional property appraisal & commercial asset valuation",
+      "Dispute resolution legal strategy & step-by-step guidance"
+    ],
+    deliverable: "Comprehensive legal risk assessment dossier covering 100-year history, court registry checks, valuation, and dispute roadmap.",
+    highlight: false
+  }
+];
+---
+
+<BaseLayout 
+  title="Legal Opinion for Properties | AKS Property Checklist"
+  description="Comprehensive 3-tier legal opinion for properties across Tamil Nadu: Standard (45-year EC), Advanced (100-year EC), and Premium (100-year EC + Court litigation check)."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://akspropertychecklist.in/" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://akspropertychecklist.in/#services" },
+      { "@type": "ListItem", "position": 3, "name": "Legal Opinion for Properties", "item": "https://akspropertychecklist.in/legal-opinion-for-properties" }
+    ]
+  })} />
+
+  <Header />
+
+  <main class="py-12 md:py-20 bg-[#faf6ee]/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs font-bold text-slate-500 mb-8">
+        <a href="/" class="hover:text-amber-600">Home</a>
+        <span>/</span>
+        <a href="/#services" class="hover:text-amber-600">Services</a>
+        <span>/</span>
+        <span class="text-slate-800">Legal Opinion for Properties</span>
+      </nav>
+
+      <!-- Hero Header with 3D Tile -->
+      <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-[#ebdcc9] mb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <span class="inline-block px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold uppercase tracking-wider mb-4">
+              Title &amp; Litigation Verification
+            </span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+              Legal Opinion for Properties
+            </h1>
+            <p class="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed">
+              Our specialized legal opinion packages are categorized into <strong>Standard</strong>, <strong>Advanced</strong>, and <strong>Premium</strong> based on depth of title tracing, encumbrance timeline (45 to 100 years), court registry searches, and physical verification.
+            </p>
+          </div>
+
+          <div class="lg:col-span-4 flex justify-center">
+            <div class="w-64 h-56 rounded-3xl bg-[#faf6ee] p-4 flex items-center justify-center border border-[#ebdcc9] shadow-lg">
+              <img 
+                src="/images/service-3d-legal-opinion.webp?v=6" 
+                alt="Legal Opinion for Properties" 
+                class="w-full h-full object-contain drop-shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Tier Packages Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-16">
+        {packages.map(pkg => (
+          <div class={`rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
+            pkg.highlight 
+              ? 'bg-white border-2 border-amber-500 shadow-xl relative lg:scale-105 z-10' 
+              : 'bg-white border border-[#ebdcc9] shadow-sm hover:shadow-lg'
+          }`}>
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class={`px-3 py-1 text-xs font-extrabold uppercase rounded-full ${
+                  pkg.highlight ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-700'
+                }`}>
+                  {pkg.badge}
+                </span>
+                <span class="text-xs font-bold text-slate-500 tracking-wide">{pkg.ecYears}</span>
+              </div>
+
+              <h2 class="text-2xl font-extrabold text-slate-900 mb-3">{pkg.tier} Opinion</h2>
+              <p class="text-sm text-slate-600 mb-6 leading-relaxed">{pkg.bestFor}</p>
+
+              <div class="border-t border-slate-100 pt-6 space-y-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Included Scope:</h3>
+                {pkg.features.map(f => (
+                  <div class="flex items-start text-xs sm:text-sm text-slate-700 font-medium">
+                    <svg class="w-4 h-4 text-amber-500 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{f}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-100 space-y-4">
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-100">
+                <span class="block text-[11px] font-bold uppercase text-slate-400">Deliverable Report:</span>
+                <p class="text-xs text-slate-600 mt-1">{pkg.deliverable}</p>
+              </div>
+
+              <a 
+                href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+                data-open-modal
+                data-service={`Legal Opinion for Properties (${pkg.tier})`}
+                class={`block w-full text-center py-3 px-4 rounded-full font-bold text-sm transition-all shadow-md ${
+                  pkg.highlight 
+                    ? 'bg-amber-500 text-white hover:bg-amber-600' 
+                    : 'bg-slate-900 text-white hover:bg-slate-800'
+                }`}
+              >
+                Request {pkg.tier} Opinion
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- How to Choose & Timeline -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-[#ebdcc9]">
+          <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-sm">?</span>
+            How to Choose the Right Package
+          </h2>
+          <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
+            <li><strong>Standard:</strong> Select this if you are entering an initial token stage for a low value low risk Property.</li>
+            <li><strong>Advanced:</strong> Highly recommended for plots, agricultural acreage, or houses that have changed multiple family hands over the decades.</li>
+            <li><strong>Premium:</strong> Essential for high-ticket commercial acquisitions, inherited partition deeds, or cases where boundary or sibling litigation is suspected.</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-sm border border-[#ebdcc9]">
+          <h2 class="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-sm">⏱</span>
+            Service Delivery Timeline
+          </h2>
+          <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
+            <li><strong>Standard Opinion:</strong> 5 – 7 Working Days.</li>
+            <li><strong>Advanced Opinion:</strong> 30 – 35 Working Days.</li>
+            <li><strong>Premium Opinion:</strong> 40 – 45 Working Days.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <RelatedServices currentHref="/legal-opinion-for-properties" />
+  <CtaBanner />
+  <Footer />
+</BaseLayout>

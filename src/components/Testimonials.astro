@@ -1,0 +1,60 @@
+---
+const testimonials = [
+  {
+    title: "Video",
+    icon: "/images/testimonial-icon-video.webp",
+    href: "https://www.youtube.com/playlist?list=PLAVld1ZH4NCcaKRe--mMM7VnWSsEbq3Uk"
+  },
+  {
+    title: "Audio",
+    icon: "/images/testimonial-icon-audio.webp",
+    href: "https://www.youtube.com/playlist?list=PLAVld1ZH4NCfdKXhvL4VncYVRGIY9fxxb"
+  },
+  {
+    title: "Google",
+    icon: "/images/testimonial-icon-google.webp",
+    href: "https://g.page/r/CeEdMi9IyTlZEBM/review"
+  }
+];
+---
+
+<section id="test" class="py-16 md:py-24 bg-[#faf6ee] border-b border-[#ebdcc9]/50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Title -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
+        Testimonials
+      </h2>
+      <div class="w-16 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
+    </div>
+
+    <!-- 3 Clean Minimalist Icons from Design -->
+    <div class="grid grid-cols-3 gap-2 sm:gap-12 max-w-4xl mx-auto items-center justify-center">
+      {testimonials.map(item => (
+        <a 
+          href={item.href} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="flex flex-col items-center text-center group cursor-pointer p-2 rounded-2xl hover:bg-white/50 transition-colors"
+        >
+          <div class="h-20 sm:h-28 flex items-center justify-center mb-2 sm:mb-4 transition-transform duration-300 group-hover:scale-110">
+            <img 
+              src={item.icon} 
+              alt={item.title} 
+              class="max-h-16 sm:max-h-24 w-auto object-contain drop-shadow-md"
+              width="80"
+              height="80"
+              loading="lazy"
+            />
+          </div>
+
+          <span class="text-sm sm:text-xl font-bold text-slate-800 group-hover:text-amber-600 transition-colors">
+            {item.title}
+          </span>
+        </a>
+      ))}
+    </div>
+
+  </div>
+</section>

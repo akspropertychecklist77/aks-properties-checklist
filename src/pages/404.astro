@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout 
+  title="Page Not Found (404) | AKS Property Checklist"
+  description="The page you are looking for may have been moved or no longer exists. Explore AKS Property Checklist services or return to the homepage."
+>
+  <Header />
+
+  <main class="py-20 md:py-32 bg-[#faf6ee]/70 flex items-center justify-center">
+    <div class="max-w-2xl mx-auto px-4 text-center space-y-6">
+      
+      <div class="w-24 h-24 mx-auto rounded-3xl bg-amber-100 flex items-center justify-center text-4xl shadow-inner border border-amber-200">
+        🧭
+      </div>
+
+      <span class="text-xs font-extrabold uppercase tracking-widest text-amber-600 bg-amber-100/80 px-3.5 py-1.5 rounded-full">
+        Error 404
+      </span>
+
+      <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+        Property Page Not Found
+      </h1>
+
+      <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-lg mx-auto">
+        The page you are looking for might have been moved or updated during our website upgrade. Let's get you back on track:
+      </p>
+
+      <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a 
+          href="/" 
+          class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-full shadow-md transition-all"
+        >
+          Go to Homepage
+        </a>
+        <a 
+          href="/#services" 
+          class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-slate-700 bg-white hover:bg-slate-100 border border-[#ebdcc9] rounded-full transition-all"
+        >
+          View Services
+        </a>
+        <a 
+          href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto px-8 py-3.5 text-sm font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 rounded-full transition-all"
+        >
+          Contact Support
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+

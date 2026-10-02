@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import RelatedServices from '../components/RelatedServices.astro';
+---
+
+<BaseLayout 
+  title="Buying & Selling Legally Clear Properties | AKS Property Checklist"
+  description="Buy and sell 100% verified, legally clear, and revenue-cleared properties across Tamil Nadu with zero fraud risk and end-to-end registration assistance."
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://akspropertychecklist.in/" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://akspropertychecklist.in/#services" },
+      { "@type": "ListItem", "position": 3, "name": "Buying & Selling Revenue and Legally Clear Properties", "item": "https://akspropertychecklist.in/buying-selling-revenue-and-legally-clear-properties" }
+    ]
+  })} />
+
+  <Header />
+
+  <main class="py-12 md:py-20 bg-[#faf6ee]/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs font-bold text-slate-500 mb-8">
+        <a href="/" class="hover:text-amber-600">Home</a>
+        <span>/</span>
+        <a href="/#services" class="hover:text-amber-600">Services</a>
+        <span>/</span>
+        <span class="text-slate-800">Buying &amp; Selling Clear Properties</span>
+      </nav>
+
+      <!-- Hero Header with 3D Tile -->
+      <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-[#ebdcc9] mb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <span class="inline-block px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold uppercase tracking-wider mb-4">
+              Safe Transactions
+            </span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+              Buying &amp; Selling Revenue &amp; Legally Clear Properties
+            </h1>
+            <p class="mt-6 text-base sm:text-lg text-slate-600 leading-relaxed">
+              Buying or selling real estate shouldn't be an anxiety-inducing gamble. We eliminate the middlemen chaos by curating and facilitating transactions strictly for <strong>100% verified, legally clear properties</strong> with unblemished titles, verified patta, and physical boundary certifications.
+            </p>
+            <div class="mt-8">
+              <a 
+                href="https://forms.gle/mT9ZcDYSV3GgiWAL6" 
+                data-open-modal
+                data-service="Buying & Selling Legally Clear Properties"
+                class="inline-block px-8 py-3.5 text-sm font-extrabold text-white bg-amber-500 hover:bg-amber-600 rounded-full shadow-md hover:shadow-lg transition-all"
+              >
+                Enquire for Buying / Selling
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 flex justify-center">
+            <div class="w-64 h-56 rounded-3xl bg-[#faf6ee] p-4 flex items-center justify-center border border-[#ebdcc9] shadow-lg">
+              <img 
+                src="/images/service-3d-buying-selling.webp" 
+                alt="Buying & Selling Revenue and Legally Clear Properties" 
+                class="w-full h-full object-contain drop-shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Benefits Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div class="p-6 rounded-2xl bg-white border border-[#ebdcc9] shadow-sm text-center">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xl mx-auto mb-4">
+            ⏱
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">Saves Time &amp; Energy</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Eliminates running around government offices, checking registers, or wasting weeks chasing evasive brokers.
+          </p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white border border-[#ebdcc9] shadow-sm text-center">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xl mx-auto mb-4">
+            🛡
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">Zero Legal Surprises</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Every property undergoes our exhaustive legal opinion and 100-year EC check before a token is ever exchanged.
+          </p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white border border-[#ebdcc9] shadow-sm text-center">
+          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xl mx-auto mb-4">
+            🤝
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">High Buyer &amp; Seller Trust</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Transparent pricing, clean documentation, and fair terms build mutual confidence for rapid, smooth closures.
+          </p>
+        </div>
+      </div>
+
+      <!-- The 10-Stage Transaction Roadmap -->
+      <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-[#ebdcc9] mb-16">
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Our End-to-End Buyer Lifecycle Support</h2>
+        <p class="text-sm text-slate-600 mb-8 leading-relaxed">
+          Standard property buying requires navigating 10 distinct, stressful stages. <strong>We manage Stages 1 to 7 directly for you, actively guide Stages 8 and 9, and finalize Stage 10 (Revenue name mutation):</strong>
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">1</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Property Scouting &amp; Genuine Seller Identification</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">2</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Extracting Complete Revenue &amp; Parent Title Records</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">3</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Physical Site Visit, FMB Boundary &amp; Access Check</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">4</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Fair Valuation &amp; Transparent Price Negotiation</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">5</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Advance Agreement Drafting with Safety Clauses</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">6</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Senior Advocate Legal Opinion &amp; Court Search</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">7</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Securing Bank Loan Approvals (if applicable)</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">8</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Sale Deed Drafting by Licensed Legal Scriveners</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">9</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Registration at Sub-Registrar Office &amp; Handover</span>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-amber-500 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">10</span>
+            <span class="text-xs sm:text-sm font-semibold text-slate-700">Patta Transfer &amp; EB / Tax Mutation in Buyer’s Name</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <RelatedServices currentHref="/buying-selling-revenue-and-legally-clear-properties" />
+  <CtaBanner />
+  <Footer />
+</BaseLayout>
