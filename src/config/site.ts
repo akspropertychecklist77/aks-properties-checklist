@@ -14,7 +14,7 @@ export const siteConfig = {
     whatsappNumber: "919363106310", 
     whatsappMessage: "Hi AKSPCL, I would like to enquire about Property Legal Due Diligence & Records Verification.",
     // Google Apps Script Webhook connected to Google Sheet CRM
-    webhookUrl: "https://script.google.com/macros/s/AKfycbyml-OhY4F505p0b3Bc1SW2ydr_DGsi0r1W6E3QlxTOyBtNxpg1Axwv71WT8PnWAHw/exec", 
+    webhookUrl: "https://script.google.com/macros/s/AKfycbySi3FGRnEf8AajkfCBHx5-KC51YH1Hd86sIeZnQ7xQtcuis4hnqjh7JDRhK5XqPc_K0g/exec", 
     enquiryFormUrl: "https://forms.gle/mT9ZcDYSV3GgiWAL6",
     careerFormUrl: "https://forms.gle/vBs2ohFW6A7PQxcg7",
     googleReviewUrl: "https://g.page/r/CeEdMi9IyTlZEBM/review",
