@@ -31,19 +31,19 @@ function doPost(e) {
     var data = JSON.parse(e.postData.contents);
     
     sheet.appendRow([
-      data.timestamp || new Date().toISOString(),
       data.name || '',
       data.phone || '',
       data.service || '',
       data.district || '',
       data.email || '',
       data.details || '',
-      'New Lead'
+      'New Lead',
+      data.timestamp || new Date().toISOString()
     ]);
     
-      // Optional: Send instant email notification to founder/team
-      MailApp.sendEmail({
-        to: "contact@akspropertychecklist.in",
+    // Instant email notification to founder/team
+    MailApp.sendEmail({
+      to: "akspropertychecklist77@gmail.com",
         subject: "🔔 New Property Enquiry: " + data.name + " (" + data.service + ")",
         body: "New lead received from website:\n\n" +
               "Name: " + data.name + "\n" +
