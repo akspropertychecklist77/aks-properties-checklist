@@ -41,19 +41,19 @@ function doPost(e) {
       'New Lead'
     ]);
     
-    // Optional: Send instant email notification to founder/team
-    MailApp.sendEmail({
-      to: "contact@akspropertychecklist.in",
-      subject: "🔔 New Property Enquiry: " + data.name + " (" + data.service + ")",
-      body: "New lead received from website:\n\n" +
-            "Name: " + data.name + "\n" +
-            "Phone: +91 " + data.phone + "\n" +
-            "Service: " + data.service + "\n" +
-            "District: " + data.district + "\n" +
-            "Email: " + (data.email || 'N/A') + "\n" +
-            "Details: " + (data.details || 'N/A') + "\n"
-    });
-    
+      // Optional: Send instant email notification to founder/team
+      MailApp.sendEmail({
+        to: "contact@akspropertychecklist.in",
+        subject: "🔔 New Property Enquiry: " + data.name + " (" + data.service + ")",
+        body: "New lead received from website:\n\n" +
+              "Name: " + data.name + "\n" +
+              "Phone: +91 " + data.phone + "\n" +
+              "Service: " + data.service + "\n" +
+              "District: " + data.district + "\n" +
+              "Email: " + (data.email || 'N/A') + "\n" +
+              "Details: " + (data.details || 'N/A') + "\n"
+      });
+      
     return ContentService
       .createTextOutput(JSON.stringify({ status: "success" }))
       .setMimeType(ContentService.MimeType.JSON);
