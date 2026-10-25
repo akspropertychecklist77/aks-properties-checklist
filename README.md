@@ -2,9 +2,8 @@
 
 Modern, ultra-lightweight website for **AKS Property Checklist (AKSPCL)**, built with **Astro 5 + Tailwind CSS**.
 
-- **Live Staging (Cloudflare)**: [https://ak-properties-checklist.vellingirid.workers.dev](https://ak-properties-checklist.vellingirid.workers.dev)
-- **Production Domain**: [https://akspropertychecklist.in](https://akspropertychecklist.in)
-- **Deployment Guide for BigRock**: See [`BIGROCK_DEPLOYMENT_README.md`](./BIGROCK_DEPLOYMENT_README.md)
+- **Live Production (Cloudflare)**: [https://akspropertychecklist.in](https://akspropertychecklist.in)
+- **Alternate Domain**: [https://akspropertychecklist.com](https://akspropertychecklist.com)
 
 ---
 
@@ -34,14 +33,10 @@ npm run preview
 
 ---
 
-## 📦 Deployment Guides
-
-- **BigRock cPanel (Hosting Plan: Single Domain Linux Hosting)**:  
-  Follow the complete instructions in **[`BIGROCK_DEPLOYMENT_README.md`](./BIGROCK_DEPLOYMENT_README.md)**.  
-  Ready-to-upload ZIP package: `C:\ak-properties-checklist\akspropertychecklist-deploy.zip`.
+## 📦 Deployment
 
 - **Cloudflare Pages / Workers**:  
-  Connected directly to GitHub repository `javaarchitect2022/ak-properties-checklist` on branch `main`. Auto-deploys upon every `git push`.
+  Connected directly to GitHub repository `akspropertychecklist77/aks-properties-checklist` on branch `main`. Auto-deploys upon every `git push`.
 
 ---
 
