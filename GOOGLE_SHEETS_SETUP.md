@@ -9,14 +9,14 @@ Follow these simple steps if you would like form submissions to automatically ap
 ### Step 1: Create a Google Sheet
 1. Open [Google Sheets](https://sheets.new) and name it **"AKSPCL Lead Enquiries"**.
 2. In the first row, create the following column headers:
-   - **A1**: `Timestamp`
-   - **B1**: `Name`
-   - **C1**: `Phone`
-   - **D1**: `Service`
-   - **E1**: `District`
-   - **F1**: `Email`
-   - **G1**: `Details`
-   - **H1**: `Status`
+   - **A1**: `Name`
+   - **B1**: `Phone`
+   - **C1**: `Service`
+   - **D1**: `District`
+   - **E1**: `Email`
+   - **F1**: `Details`
+   - **G1**: `Status`
+   - **H1**: `Timestamp`
 
 ---
 
