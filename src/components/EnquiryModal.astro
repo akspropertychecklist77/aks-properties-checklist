@@ -335,7 +335,7 @@ const districts = [
 
   // Attach event listeners to all triggers across the entire page
   function attachModalTriggers() {
-    document.querySelectorAll('[data-open-modal], a[href*="forms.gle"]').forEach(trigger => {
+    document.querySelectorAll('[data-open-modal], a[href*="mT9ZcDYSV3GgiWAL6"]').forEach(trigger => {
       trigger.addEventListener('click', (e) => {
         // Intercept navigation
         e.preventDefault();
@@ -405,6 +405,25 @@ const districts = [
 
       let createdCaseId = null;
 
+      // Extract survey number if provided in details
+      const surveyMatch = (payload.details || '').match(/(?:S\.?F\.?|R\.?S\.?|Survey|Sy\.?)\s*(?:No\.?)?\s*[:\s]*([0-9]+(?:\/[0-9]+[A-Za-z]*)?)/i);
+      const parsedSurvey = surveyMatch ? surveyMatch[1] : (payload.details ? payload.details.slice(0, 40) : 'Survey No. Pending');
+
+      // Calculate initial fee schedule according to service package
+      let totalFee = 6500;
+      let advanceFee = 5200;
+      const sLower = (payload.service || '').toLowerCase();
+      if (sLower.includes('advanced')) {
+        totalFee = 9500;
+        advanceFee = 7600;
+      } else if (sLower.includes('premium')) {
+        totalFee = 15000;
+        advanceFee = 12000;
+      } else if (sLower.includes('maintenance')) {
+        totalFee = 12000;
+        advanceFee = 10000;
+      }
+
       try {
         // 1. Primary: Save directly to Cloudflare D1 SQL Database via live API
         if (dbApiUrl) {
@@ -419,7 +438,9 @@ const districts = [
                 service_package: payload.service,
                 district: payload.district,
                 property_address: payload.details,
-                survey_number: '',
+                survey_number: parsedSurvey,
+                total_fee: totalFee,
+                advance_amount: advanceFee,
               })
             });
             const dbData = await dbRes.json();
