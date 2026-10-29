@@ -14,6 +14,7 @@ export const siteConfig = {
     whatsappNumber: "919363106310", 
     whatsappMessage: "Hi AKSPCL, I would like to enquire about Property Legal Due Diligence & Records Verification.",
     // Live Database API (Cloudflare D1 Serverless Backend)
+    enquiryApiUrl: "https://aks-property-portal.akspropertychecklist77.workers.dev/api/enquiries",
     dbApiUrl: "https://aks-property-portal.akspropertychecklist77.workers.dev/api/cases",
     trackingBaseUrl: "https://aks-property-portal.akspropertychecklist77.workers.dev/track",
     // Google Apps Script Webhook fallback connected to Google Sheet CRM

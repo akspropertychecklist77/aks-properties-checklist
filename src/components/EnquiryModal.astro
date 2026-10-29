@@ -258,6 +258,7 @@ const districts = [
 <script define:vars={{ 
   whatsappNumber: siteConfig.contact.whatsappNumber, 
   webhookUrl: siteConfig.contact.webhookUrl,
+  enquiryApiUrl: siteConfig.contact.enquiryApiUrl || siteConfig.contact.dbApiUrl,
   dbApiUrl: siteConfig.contact.dbApiUrl,
   trackingBaseUrl: siteConfig.contact.trackingBaseUrl
 }}>
@@ -424,28 +425,51 @@ const districts = [
         advanceFee = 10000;
       }
 
+      let referenceId = null;
+      let isCase = false;
+
       try {
         // 1. Primary: Save directly to Cloudflare D1 SQL Database via live API
-        if (dbApiUrl) {
+        const targetApiUrl = enquiryApiUrl || dbApiUrl;
+        if (targetApiUrl) {
           try {
-            const dbRes = await fetch(dbApiUrl, {
+            const isEnquiryEndpoint = targetApiUrl.includes('/api/enquiries');
+            const apiPayload = isEnquiryEndpoint ? {
+              client_name: payload.name,
+              client_phone: payload.phone,
+              client_email: payload.email,
+              service_package: payload.service,
+              district: payload.district,
+              property_address: payload.details,
+              survey_number: parsedSurvey,
+              client_notes: payload.details,
+              source: 'website'
+            } : {
+              client_name: payload.name,
+              client_phone: payload.phone,
+              client_email: payload.email,
+              service_package: payload.service,
+              district: payload.district,
+              property_address: payload.details,
+              survey_number: parsedSurvey,
+              total_fee: totalFee,
+              advance_amount: advanceFee,
+            };
+
+            const dbRes = await fetch(targetApiUrl, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                client_name: payload.name,
-                client_phone: payload.phone,
-                client_email: payload.email,
-                service_package: payload.service,
-                district: payload.district,
-                property_address: payload.details,
-                survey_number: parsedSurvey,
-                total_fee: totalFee,
-                advance_amount: advanceFee,
-              })
+              body: JSON.stringify(apiPayload)
             });
             const dbData = await dbRes.json();
-            if (dbData && dbData.success && dbData.caseId) {
-              createdCaseId = dbData.caseId;
+            if (dbData && dbData.success) {
+              if (dbData.enquiryId) {
+                referenceId = dbData.enquiryId;
+                isCase = false;
+              } else if (dbData.caseId) {
+                referenceId = dbData.caseId;
+                isCase = true;
+              }
             }
           } catch (dbErr) {
             console.warn('Database push fallback to Google Sheet:', dbErr);
@@ -459,7 +483,7 @@ const districts = [
               method: 'POST',
               mode: 'no-cors',
               headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-              body: JSON.stringify({ ...payload, caseId: createdCaseId || 'PENDING' })
+              body: JSON.stringify({ ...payload, caseId: referenceId || 'PENDING' })
             });
           } catch (_) {}
         }
@@ -467,30 +491,44 @@ const districts = [
         // 3. Backup in localStorage for offline client resilience
         try {
           const stored = JSON.parse(localStorage.getItem('akspcl_enquiries') || '[]');
-          stored.push({ ...payload, caseId: createdCaseId });
+          stored.push({ ...payload, referenceId, isCase });
           localStorage.setItem('akspcl_enquiries', JSON.stringify(stored));
         } catch (_) {}
 
-        // 4. Update UI with Case Tracking Badge & Live Track Link
-        if (createdCaseId) {
+        // 4. Update UI with Reference Badge
+        if (referenceId) {
           const badgeContainer = document.getElementById('case-id-badge-container');
           const idDisplay = document.getElementById('case-id-display');
+          const badgeLabel = badgeContainer ? badgeContainer.querySelector('span') : null;
           const trackBtn = document.getElementById('success-track-btn');
+          const successDesc = document.getElementById('success-client-name');
           
           if (badgeContainer && idDisplay) {
-            idDisplay.textContent = createdCaseId;
+            idDisplay.textContent = referenceId;
+            if (badgeLabel) {
+              badgeLabel.textContent = isCase ? 'Your Official Case Tracking ID' : 'Intake Reference Number';
+            }
             badgeContainer.classList.remove('hidden');
           }
-          if (trackBtn && trackingBaseUrl) {
-            trackBtn.href = `${trackingBaseUrl}/${createdCaseId}`;
+
+          if (isCase && trackBtn && trackingBaseUrl) {
+            trackBtn.href = `${trackingBaseUrl}/${referenceId}`;
             trackBtn.classList.remove('hidden');
             trackBtn.classList.add('flex');
+          } else if (!isCase && trackBtn) {
+            trackBtn.classList.add('hidden');
+          }
+
+          if (successDesc) {
+            successDesc.textContent = isCase 
+              ? "Your property consultation has been recorded into our Cloudflare D1 Legal Database. Advocate A.K. Saravanan's team will review your records."
+              : "Your property enquiry has been securely recorded in our Legal Desk Intake Buffer. Our team will review your property details, after which an official case file is opened.";
           }
         }
 
-        // 5. Configure direct WhatsApp follow-up link with Case ID
-        const caseLine = createdCaseId ? `*Case ID:* ${createdCaseId}\n` : '';
-        const waMsg = `Hello AKSPCL Team,\nI have submitted a consultation request on your website.\n\n${caseLine}*Name:* ${payload.name}\n*Phone:* +91 ${payload.phone}\n*Service:* ${payload.service}\n*District:* ${payload.district}\n*Details:* ${payload.details || 'N/A'}`;
+        // 5. Configure direct WhatsApp follow-up link with Reference ID
+        const refLine = referenceId ? `*${isCase ? 'Case ID' : 'Enquiry Ref'}:* ${referenceId}\n` : '';
+        const waMsg = `Hello AKSPCL Team,\nI have submitted a consultation request on your website.\n\n${refLine}*Name:* ${payload.name}\n*Phone:* +91 ${payload.phone}\n*Service:* ${payload.service}\n*District:* ${payload.district}\n*Details:* ${payload.details || 'N/A'}`;
         if (successWhatsappBtn) {
           successWhatsappBtn.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
         }
