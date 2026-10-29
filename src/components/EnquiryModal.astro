@@ -190,20 +190,44 @@ const districts = [
       </form>
 
       <!-- Success Screen (Hidden initially) -->
-      <div id="enquiry-success-view" class="hidden text-center py-6 space-y-5">
+      <div id="enquiry-success-view" class="hidden text-center py-6 space-y-4">
         <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-3xl shadow-inner">
           ✓
         </div>
 
-        <div class="space-y-2">
-          <h4 class="text-2xl font-black text-slate-900">Enquiry Received!</h4>
-          <p id="success-client-name" class="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-            Thank you for reaching out to AKS Property Checklist. Advocate A.K. Saravanan's property advisory team will review your requirements and contact you within 2 business hours.
+        <div class="space-y-1.5">
+          <h4 class="text-2xl font-black text-slate-900">Case Intake Registered!</h4>
+          
+          <!-- Live Case ID Badge (Database Driven) -->
+          <div id="case-id-badge-container" class="hidden my-2.5">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
+              Your Official Case Tracking ID
+            </span>
+            <div id="case-id-display" class="text-xl font-mono font-black text-amber-700 bg-amber-50 border border-amber-300 py-1.5 px-4 rounded-xl inline-block shadow-sm">
+              AK-2026-000
+            </div>
+          </div>
+
+          <p id="success-client-name" class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
+            Your property consultation has been recorded into our Cloudflare D1 Legal Database. Advocate A.K. Saravanan's team will review your records.
           </p>
         </div>
 
-        <!-- Direct WhatsApp Follow-up Button -->
-        <div class="pt-3 max-w-sm mx-auto">
+        <!-- Action Buttons: Live Track + WhatsApp -->
+        <div class="pt-2 max-w-sm mx-auto space-y-2.5">
+          <a 
+            id="success-track-btn"
+            href="#" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="hidden w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-400 text-sm font-bold items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all"
+          >
+            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            </svg>
+            <span>Track Case Status Online</span>
+          </a>
+
           <a 
             id="success-whatsapp-btn"
             href="#" 
@@ -220,7 +244,7 @@ const districts = [
           <button 
             type="button" 
             id="success-close-btn"
-            class="mt-3 text-xs text-slate-500 hover:text-slate-800 underline font-semibold"
+            class="mt-2 text-xs text-slate-500 hover:text-slate-800 underline font-semibold"
           >
             Back to Website
           </button>
@@ -231,7 +255,12 @@ const districts = [
   </div>
 </div>
 
-<script define:vars={{ whatsappNumber: siteConfig.contact.whatsappNumber, webhookUrl: siteConfig.contact.webhookUrl }}>
+<script define:vars={{ 
+  whatsappNumber: siteConfig.contact.whatsappNumber, 
+  webhookUrl: siteConfig.contact.webhookUrl,
+  dbApiUrl: siteConfig.contact.dbApiUrl,
+  trackingBaseUrl: siteConfig.contact.trackingBaseUrl
+}}>
   const backdrop = document.getElementById('enquiry-modal-backdrop');
   const card = document.getElementById('enquiry-modal-card');
   const closeBtn = document.getElementById('modal-close-btn');
@@ -374,25 +403,73 @@ const districts = [
       if (btnText) btnText.textContent = 'Submitting...';
       if (btnSpinner) btnSpinner.classList.remove('hidden');
 
+      let createdCaseId = null;
+
       try {
+        // 1. Primary: Save directly to Cloudflare D1 SQL Database via live API
+        if (dbApiUrl) {
+          try {
+            const dbRes = await fetch(dbApiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                client_name: payload.name,
+                client_phone: payload.phone,
+                client_email: payload.email,
+                service_package: payload.service,
+                district: payload.district,
+                property_address: payload.details,
+                survey_number: '',
+              })
+            });
+            const dbData = await dbRes.json();
+            if (dbData && dbData.success && dbData.caseId) {
+              createdCaseId = dbData.caseId;
+            }
+          } catch (dbErr) {
+            console.warn('Database push fallback to Google Sheet:', dbErr);
+          }
+        }
+
+        // 2. Secondary: Dual-sync to Google Sheet CRM Webhook
         if (webhookUrl) {
-          await fetch(webhookUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(payload)
-          });
+          try {
+            await fetch(webhookUrl, {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({ ...payload, caseId: createdCaseId || 'PENDING' })
+            });
+          } catch (_) {}
         }
         
-        // Backup in localStorage for offline reliability
+        // 3. Backup in localStorage for offline client resilience
         try {
           const stored = JSON.parse(localStorage.getItem('akspcl_enquiries') || '[]');
-          stored.push(payload);
+          stored.push({ ...payload, caseId: createdCaseId });
           localStorage.setItem('akspcl_enquiries', JSON.stringify(stored));
         } catch (_) {}
 
-        // Configure direct WhatsApp follow-up link
-        const waMsg = `Hello AKSPCL Team,\nI have submitted an enquiry on your website.\n\n*Name:* ${payload.name}\n*Phone:* +91 ${payload.phone}\n*Service:* ${payload.service}\n*District:* ${payload.district}\n*Details:* ${payload.details || 'N/A'}`;
+        // 4. Update UI with Case Tracking Badge & Live Track Link
+        if (createdCaseId) {
+          const badgeContainer = document.getElementById('case-id-badge-container');
+          const idDisplay = document.getElementById('case-id-display');
+          const trackBtn = document.getElementById('success-track-btn');
+          
+          if (badgeContainer && idDisplay) {
+            idDisplay.textContent = createdCaseId;
+            badgeContainer.classList.remove('hidden');
+          }
+          if (trackBtn && trackingBaseUrl) {
+            trackBtn.href = `${trackingBaseUrl}/${createdCaseId}`;
+            trackBtn.classList.remove('hidden');
+            trackBtn.classList.add('flex');
+          }
+        }
+
+        // 5. Configure direct WhatsApp follow-up link with Case ID
+        const caseLine = createdCaseId ? `*Case ID:* ${createdCaseId}\n` : '';
+        const waMsg = `Hello AKSPCL Team,\nI have submitted a consultation request on your website.\n\n${caseLine}*Name:* ${payload.name}\n*Phone:* +91 ${payload.phone}\n*Service:* ${payload.service}\n*District:* ${payload.district}\n*Details:* ${payload.details || 'N/A'}`;
         if (successWhatsappBtn) {
           successWhatsappBtn.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
         }

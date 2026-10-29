@@ -13,7 +13,10 @@ export const siteConfig = {
     phone: "+91 93631 06310", 
     whatsappNumber: "919363106310", 
     whatsappMessage: "Hi AKSPCL, I would like to enquire about Property Legal Due Diligence & Records Verification.",
-    // Google Apps Script Webhook connected to Google Sheet CRM
+    // Live Database API (Cloudflare D1 Serverless Backend)
+    dbApiUrl: "https://aks-property-portal.akspropertychecklist77.workers.dev/api/cases",
+    trackingBaseUrl: "https://aks-property-portal.akspropertychecklist77.workers.dev/track",
+    // Google Apps Script Webhook fallback connected to Google Sheet CRM
     webhookUrl: "https://script.google.com/macros/s/AKfycbySi3FGRnEf8AajkfCBHx5-KC51YH1Hd86sIeZnQ7xQtcuis4hnqjh7JDRhK5XqPc_K0g/exec", 
     enquiryFormUrl: "https://forms.gle/mT9ZcDYSV3GgiWAL6",
     careerFormUrl: "https://forms.gle/vBs2ohFW6A7PQxcg7",
