@@ -1,0 +1,428 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const bufferCategories = [
+  {
+    id: "water_body",
+    name: "Water Bodies & PWD Tanks",
+    icon: "water",
+    act: "TN Protection of Tanks and Eviction of Encroachment Act, 2007 & G.O. Ms. No. 138 (MAWS)",
+    description: "Statutory setbacks from rivers, channels, odai, eri bunds, and foreshore boundaries to prevent flooding and encroachment.",
+    subtypes: [
+      { id: "river_canal", name: "River / Canal / Odai Bank", prohibited: 15, regulated: 50, unit: "meters from bank boundary" },
+      { id: "pwd_tank", name: "PWD Lake / Irrigation Tank Bund", prohibited: 50, regulated: 100, unit: "meters from Full Tank Level (FTL)" }
+    ]
+  },
+  {
+    id: "ht_power",
+    name: "High Tension (HT) Electricity Lines",
+    icon: "zap",
+    act: "Central Electricity Authority (Safety Requirements) Regulations 2010 & TANGEDCO Safety Standards",
+    description: "Horizontal and vertical safety clearances from overhead high-voltage transmission lines across Tamil Nadu.",
+    subtypes: [
+      { id: "ht_11_33", name: "11 kV to 33 kV Distribution Line", prohibited: 3, regulated: 8, unit: "meters horizontal clearance" },
+      { id: "ht_66_110", name: "66 kV to 110 kV Transmission Line", prohibited: 5, regulated: 12, unit: "meters horizontal clearance" },
+      { id: "ht_230", name: "230 kV Transmission Line", prohibited: 7, regulated: 18, unit: "meters horizontal clearance" },
+      { id: "ht_400", name: "400 kV Extra High Voltage (EHV) Corridor", prohibited: 15, regulated: 26, unit: "meters (Total 52m corridor width)" }
+    ]
+  },
+  {
+    id: "railway",
+    name: "Southern Railway Tracks",
+    icon: "train",
+    act: "Indian Railways Works Manual & TNCDBR 2019 (Rule 19)",
+    description: "Compulsory safety buffer from Southern Railway operational track boundaries requiring Railway Divisional Engineer (DEN) NOC.",
+    subtypes: [
+      { id: "rail_standard", name: "Standard Railway Boundary Setback", prohibited: 30, regulated: 50, unit: "meters from railway boundary" }
+    ]
+  },
+  {
+    id: "highways",
+    name: "National & State Highways",
+    icon: "road",
+    act: "Control of National Highways (Land and Traffic) Act, 2002 & IRC 73-1980 Ribbon Development Rules",
+    description: "Statutory setback from highway central line to preserve future right of way and prevent ribbon congestion.",
+    subtypes: [
+      { id: "nh", name: "National Highway (NH)", prohibited: 40, regulated: 75, unit: "meters from highway centerline" },
+      { id: "sh", name: "State Highway (SH)", prohibited: 30, regulated: 50, unit: "meters from highway centerline" },
+      { id: "mdr", name: "Major District Road (MDR)", prohibited: 20, regulated: 35, unit: "meters from road centerline" }
+    ]
+  },
+  {
+    id: "asi_monument",
+    name: "Archaeological Protected Monuments",
+    icon: "landmark",
+    act: "Ancient Monuments and Archaeological Sites and Remains (AMASR) Act, 2010",
+    description: "Strictly enforced buffer zones around centrally protected ASI heritage monuments across Tamil Nadu.",
+    subtypes: [
+      { id: "asi_monument", name: "Centrally Protected ASI Monument", prohibited: 100, regulated: 300, unit: "meters in all directions" }
+    ]
+  },
+  {
+    id: "forest",
+    name: "Reserve Forest & Eco-Sensitive Areas",
+    icon: "trees",
+    act: "Tamil Nadu Forest Act, 1882 & Forest Conservation Directives",
+    description: "Mandatory ecological buffer along notified Reserve Forest (RF) boundary lines.",
+    subtypes: [
+      { id: "forest_rf", name: "Reserve Forest Boundary Setback", prohibited: 60, regulated: 100, unit: "meters from RF boundary demarcation" }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Tamil Nadu Buffer Zone Calculator & Statutory Regulations | AKS Property Checklist"
+  description="Calculate legal buffer zones and statutory setback restrictions for Tamil Nadu properties. Verify PWD water bodies, TANGEDCO HT power lines, Southern Railway, Highways, and ASI buffers."
+>
+  <Header />
+
+  <main class="bg-slate-50 min-h-screen py-8 sm:py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-6">
+        <nav class="flex items-center gap-2 text-xs font-semibold text-slate-500">
+          <a href="/" class="hover:text-blue-600">Home</a>
+          <span>/</span>
+          <span class="text-slate-900 font-bold">Buffer Zone Calculator</span>
+        </nav>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200">
+          Tamil Nadu Statutory Limits • 2026 Updated
+        </span>
+      </div>
+
+      <!-- Hero Header -->
+      <div class="bg-white rounded-2xl p-6 sm:p-10 border border-slate-200 shadow-xs mb-8">
+        <div class="max-w-3xl">
+          <span class="px-2.5 py-0.5 rounded bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200 inline-block mb-3">
+            Town Planning & Setback Verification
+          </span>
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Tamil Nadu Property Buffer Zone Calculator
+          </h1>
+          <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+            Properties situated adjacent to water bodies, high-tension lines, railway tracks, or highways face severe building approval restrictions and potential demolition. Use our interactive calculator to check whether your plot falls into a Prohibited, Regulated, or Clear statutory zone.
+          </p>
+        </div>
+      </div>
+
+      <!-- Interactive Calculator Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-12">
+        
+        <!-- Controls Column (7 Cols) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+          <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+            Select Property Surroundings
+          </h2>
+
+          <!-- Step 1: Feature Category -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+              1. Adjacent Infrastructure or Natural Feature
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="category-selector">
+              {bufferCategories.map((cat, idx) => (
+                <button
+                  type="button"
+                  data-cat-id={cat.id}
+                  class={`category-btn p-3.5 rounded-xl border text-left transition-all flex flex-col justify-between ${
+                    idx === 0 
+                      ? 'border-blue-600 bg-blue-50/50 ring-1 ring-blue-600' 
+                      : 'border-slate-200 hover:border-slate-300 bg-white'
+                  }`}
+                >
+                  <span class="text-xs font-bold text-slate-900">{cat.name}</span>
+                  <span class="text-[10px] text-slate-500 mt-1 line-clamp-1">{cat.act.split('&')[0]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Step 2: Specific Sub-Classification -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+              2. Voltage / Highway / Boundary Sub-Type
+            </label>
+            <select
+              id="subtype-select"
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition"
+            >
+              <!-- Populated by JavaScript -->
+            </select>
+          </div>
+
+          <!-- Step 3: Distance Slider -->
+          <div class="space-y-3 pt-2">
+            <div class="flex items-center justify-between">
+              <label for="distance-slider" class="text-xs font-bold uppercase tracking-wider text-slate-700">
+                3. Distance of Your Property Boundary
+              </label>
+              <div class="flex items-center gap-1.5 bg-slate-100 px-3 py-1 rounded-lg border border-slate-200">
+                <span id="distance-readout" class="font-mono text-base font-extrabold text-blue-600">25</span>
+                <span class="text-xs text-slate-500 font-bold">Meters</span>
+              </div>
+            </div>
+
+            <input
+              type="range"
+              id="distance-slider"
+              min="0"
+              max="150"
+              value="25"
+              step="1"
+              class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+            />
+
+            <div class="flex justify-between text-[10px] font-mono text-slate-400">
+              <span>0 m (Direct Boundary)</span>
+              <span>50 m</span>
+              <span>100 m</span>
+              <span>150 m+</span>
+            </div>
+          </div>
+
+          <!-- Legal Reference Note -->
+          <div id="statutory-note-box" class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 space-y-1">
+            <div class="font-bold text-slate-800" id="statutory-act-title">
+              Tamil Nadu Protection of Tanks Act, 2007
+            </div>
+            <div class="text-[11px] text-slate-500" id="statutory-act-desc">
+              Mandates eviction of encroachers without compensation under High Court of Madras division bench guidelines.
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Results Card (5 Cols) -->
+        <div class="lg:col-span-5 space-y-6">
+          <div id="result-card" class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs transition-all">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                Statutory Assessment
+              </span>
+              <span id="verdict-pill" class="px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                Regulated Buffer Zone
+              </span>
+            </div>
+
+            <div class="text-center py-4 border-y border-slate-100 my-4">
+              <div id="verdict-icon-container" class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-2xl mb-3 bg-amber-100 text-amber-600">
+                ⚠️
+              </div>
+              <h3 id="verdict-title" class="text-xl font-extrabold text-slate-900 mb-1">
+                Regulated Buffer Zone
+              </h3>
+              <p id="verdict-summary" class="text-xs text-slate-600 max-w-xs mx-auto leading-relaxed">
+                Your boundary is within the regulated 15m–50m buffer. Construction is strictly restricted and requires mandatory department clearance.
+              </p>
+            </div>
+
+            <!-- Setback Thresholds breakdown -->
+            <div class="space-y-2 text-xs mb-6">
+              <div class="flex justify-between py-1.5 border-b border-slate-100">
+                <span class="text-slate-500">Prohibited Zone (No Build):</span>
+                <span id="threshold-prohibited" class="font-mono font-bold text-rose-600">0 – 15 Meters</span>
+              </div>
+              <div class="flex justify-between py-1.5 border-b border-slate-100">
+                <span class="text-slate-500">Regulated Zone (NOC Req):</span>
+                <span id="threshold-regulated" class="font-mono font-bold text-amber-600">15 – 50 Meters</span>
+              </div>
+              <div class="flex justify-between py-1.5">
+                <span class="text-slate-500">Clear Zone (Safe):</span>
+                <span id="threshold-clear" class="font-mono font-bold text-emerald-600">&gt; 50 Meters</span>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <a
+              href="https://forms.gle/mT9ZcDYSV3GgiWAL6"
+              data-open-modal
+              data-service="Buffer Zone & Setback Legal Scrutiny"
+              class="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-xs shadow-blue-500/20 transition"
+            >
+              <span>Get Advocate Verification For This Plot</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Quick Navigation to 40-Point Checklist -->
+          <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-xs flex items-center justify-between">
+            <div>
+              <h4 class="text-xs font-bold text-slate-900">Need full property audit?</h4>
+              <p class="text-[11px] text-slate-500">Review all 40 legal checkpoints including 30-yr EC and Patta.</p>
+            </div>
+            <a
+              href="/checklist"
+              class="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition whitespace-nowrap"
+            >
+              Open Checklist &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Comprehensive Buffer Zone Regulations Guide -->
+      <div class="bg-white rounded-2xl p-6 sm:p-10 border border-slate-200 shadow-xs">
+        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 mb-6">
+          Tamil Nadu Statutory Buffer Regulations Reference Guide
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {bufferCategories.map((item) => (
+            <div class="p-5 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
+              <h3 class="text-sm font-extrabold text-slate-900">{item.name}</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">{item.description}</p>
+              
+              <div class="space-y-1.5 pt-2 border-t border-slate-200 text-[11px]">
+                {item.subtypes.map(s => (
+                  <div class="flex justify-between font-mono">
+                    <span class="text-slate-600 truncate max-w-[160px]">{s.name}:</span>
+                    <span class="font-bold text-slate-800">{s.prohibited}m / {s.regulated}m</span>
+                  </div>
+                ))}
+              </div>
+
+              <div class="pt-2 text-[10px] text-slate-400 font-medium">
+                {item.act}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+
+  <script define:vars={{ bufferCategories }}>
+    let currentCat = bufferCategories[0];
+    let currentSubtype = currentCat.subtypes[0];
+
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const subtypeSelect = document.getElementById('subtype-select');
+    const distanceSlider = document.getElementById('distance-slider');
+    const distanceReadout = document.getElementById('distance-readout');
+    
+    const verdictPill = document.getElementById('verdict-pill');
+    const verdictIconContainer = document.getElementById('verdict-icon-container');
+    const verdictTitle = document.getElementById('verdict-title');
+    const verdictSummary = document.getElementById('verdict-summary');
+    const thresholdProhibited = document.getElementById('threshold-prohibited');
+    const thresholdRegulated = document.getElementById('threshold-regulated');
+    const thresholdClear = document.getElementById('threshold-clear');
+    const statutoryActTitle = document.getElementById('statutory-act-title');
+    const statutoryActDesc = document.getElementById('statutory-act-desc');
+
+    function populateSubtypes() {
+      if (!subtypeSelect) return;
+      subtypeSelect.innerHTML = '';
+      currentCat.subtypes.forEach(st => {
+        const opt = document.createElement('option');
+        opt.value = st.id;
+        opt.textContent = `${st.name} (Prohibited: <${st.prohibited}m, Regulated: <${st.regulated}m)`;
+        subtypeSelect.appendChild(opt);
+      });
+      currentSubtype = currentCat.subtypes[0];
+      recalc();
+    }
+
+    function recalc() {
+      const distance = parseInt(distanceSlider?.value || '25', 10);
+      if (distanceReadout) distanceReadout.textContent = String(distance);
+
+      const prohibitedLimit = currentSubtype.prohibited;
+      const regulatedLimit = currentSubtype.regulated;
+
+      if (thresholdProhibited) thresholdProhibited.textContent = `0 – ${prohibitedLimit} Meters`;
+      if (thresholdRegulated) thresholdRegulated.textContent = `${prohibitedLimit} – ${regulatedLimit} Meters`;
+      if (thresholdClear) thresholdClear.textContent = `> ${regulatedLimit} Meters`;
+
+      if (statutoryActTitle) statutoryActTitle.textContent = currentCat.act;
+      if (statutoryActDesc) statutoryActDesc.textContent = currentCat.description;
+
+      if (distance < prohibitedLimit) {
+        // Prohibited
+        if (verdictPill) {
+          verdictPill.textContent = 'Prohibited Zone';
+          verdictPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200';
+        }
+        if (verdictIconContainer) {
+          verdictIconContainer.textContent = '⛔';
+          verdictIconContainer.className = 'w-16 h-16 rounded-full mx-auto flex items-center justify-center text-2xl mb-3 bg-rose-100 text-rose-600';
+        }
+        if (verdictTitle) {
+          verdictTitle.textContent = 'Prohibited Buffer Zone';
+        }
+        if (verdictSummary) {
+          verdictSummary.textContent = `High Legal Risk: At ${distance}m, this property falls completely inside the statutory prohibited setback (<${prohibitedLimit}m). Construction is illegal and layout permissions will be rejected.`;
+        }
+      } else if (distance <= regulatedLimit) {
+        // Regulated
+        if (verdictPill) {
+          verdictPill.textContent = 'Regulated Buffer Zone';
+          verdictPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200';
+        }
+        if (verdictIconContainer) {
+          verdictIconContainer.textContent = '⚠️';
+          verdictIconContainer.className = 'w-16 h-16 rounded-full mx-auto flex items-center justify-center text-2xl mb-3 bg-amber-100 text-amber-600';
+        }
+        if (verdictTitle) {
+          verdictTitle.textContent = 'Regulated Buffer Zone';
+        }
+        if (verdictSummary) {
+          verdictSummary.textContent = `Conditional Compliance: At ${distance}m, this property is in the regulated buffer zone (${prohibitedLimit}m–${regulatedLimit}m). Construction requires prior departmental NOC and strict height/setback conformity.`;
+        }
+      } else {
+        // Clear
+        if (verdictPill) {
+          verdictPill.textContent = 'Clear & Compliant Zone';
+          verdictPill.className = 'px-2.5 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200';
+        }
+        if (verdictIconContainer) {
+          verdictIconContainer.textContent = '✅';
+          verdictIconContainer.className = 'w-16 h-16 rounded-full mx-auto flex items-center justify-center text-2xl mb-3 bg-emerald-100 text-emerald-600';
+        }
+        if (verdictTitle) {
+          verdictTitle.textContent = 'Clear & Compliant Zone';
+        }
+        if (verdictSummary) {
+          verdictSummary.textContent = `Safe Distance: At ${distance}m, this plot is beyond the statutory restriction threshold (>${regulatedLimit}m). Standard municipal/panchayat building bylaws apply without special buffer restrictions.`;
+        }
+      }
+    }
+
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => {
+          b.classList.remove('border-blue-600', 'bg-blue-50/50', 'ring-1', 'ring-blue-600');
+          b.classList.add('border-slate-200', 'bg-white');
+        });
+        btn.classList.add('border-blue-600', 'bg-blue-50/50', 'ring-1', 'ring-blue-600');
+        btn.classList.remove('border-slate-200', 'bg-white');
+
+        const catId = btn.getAttribute('data-cat-id');
+        currentCat = bufferCategories.find(c => c.id === catId) || bufferCategories[0];
+        populateSubtypes();
+      });
+    });
+
+    subtypeSelect?.addEventListener('change', (e) => {
+      const selectedId = (e.target).value;
+      currentSubtype = currentCat.subtypes.find(s => s.id === selectedId) || currentCat.subtypes[0];
+      recalc();
+    });
+
+    distanceSlider?.addEventListener('input', recalc);
+
+    // Initial load
+    populateSubtypes();
+  </script>
+</BaseLayout>
+

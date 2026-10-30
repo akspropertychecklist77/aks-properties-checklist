@@ -1,0 +1,779 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+
+interface ChecklistItem {
+  id: number;
+  tier: number;
+  tierTitle: string;
+  title: string;
+  description: string;
+  statutoryBasis: string;
+  criticality: 'Critical' | 'High' | 'Standard';
+  tamilNaduContext: string;
+}
+
+const checklistItems: ChecklistItem[] = [
+  // Tier 1: Root Title, 30-Year Chain & Encumbrances (1-10)
+  {
+    id: 1,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "30-Year Continuous Encumbrance Certificate (EC)",
+    description: "Search in Sub-Registrar Office (SRO) records for minimum 30 years without any intervening year gaps.",
+    statutoryBasis: "Registration Act, 1908 (Section 57) & Inspector General of Registration (TN) Rules",
+    criticality: "Critical",
+    tamilNaduContext: "Generated via TNREGINET portal and cross-checked against manual registers for pre-1975 entries."
+  },
+  {
+    id: 2,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Registered Parent Title Deeds (Original Chain)",
+    description: "Chronological chain of all registered sale deeds, partition deeds, gift deeds, and settlement deeds establishing root title.",
+    statutoryBasis: "Transfer of Property Act, 1882 (Section 54) & Indian Evidence Act (Section 90)",
+    criticality: "Critical",
+    tamilNaduContext: "Original documents must be inspected to ensure no undisclosed equitable mortgage by deposit of title deeds."
+  },
+  {
+    id: 3,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Bank / Financial Institution No-Objection Certificate",
+    description: "Verification that the land is not mortgaged to any nationalized, co-operative, or private bank.",
+    statutoryBasis: "SARFAESI Act, 2002 & CERSAI Portal Search",
+    criticality: "Critical",
+    tamilNaduContext: "Cross-checked via CERSAI (Central Registry of Securitisation Asset Reconstruction and Security Interest)."
+  },
+  {
+    id: 4,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Legal Heirship & Death Certificates (Ancestral Devolution)",
+    description: "Certified legal heirship certificate issued by Tahsildar or competent Revenue Court upon death of recorded owner.",
+    statutoryBasis: "Indian Succession Act, 1925 & Hindu Succession (Amendment) Act, 2005",
+    criticality: "Critical",
+    tamilNaduContext: "Mandatory inclusion of married daughters and female co-parceners having equal rights in Tamil Nadu ancestral property."
+  },
+  {
+    id: 5,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Registered Release / Partition Deed Compliance",
+    description: "Proper registration and stamp duty compliance of release deeds by co-heirs renouncing rights.",
+    statutoryBasis: "Indian Stamp Act, 1899 (TN Schedule I) & Registration Act, 1908",
+    criticality: "High",
+    tamilNaduContext: "Unregistered family arrangements or verbal release have zero legal validity under Section 17 of Registration Act."
+  },
+  {
+    id: 6,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Power of Attorney (PoA) Adjudication & Live Verification",
+    description: "Verification that PoA is registered, active, unrevoked, and principal is alive as of date of execution.",
+    statutoryBasis: "Powers of Attorney Act, 1882 & TN Registration Rules Section 32A",
+    criticality: "Critical",
+    tamilNaduContext: "Life certificate of principal is mandatory at SRO. PoA with consideration requires higher stamp duty."
+  },
+  {
+    id: 7,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Minor's Undivided Share Court Sanction",
+    description: "Court permission under Section 8 of Hindu Minority and Guardianship Act if any co-owner is a minor.",
+    statutoryBasis: "Hindu Minority and Guardianship Act, 1956 (Section 8)",
+    criticality: "Critical",
+    tamilNaduContext: "Sale of minor share without prior District Court permission is voidable at minor's instance upon attaining majority."
+  },
+  {
+    id: 8,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Civil Court Litigation & Injunction Search",
+    description: "Litigation search in District Munsif, Sub-Court, and High Court of Judicature at Madras for pending OS/AS/EP.",
+    statutoryBasis: "Civil Procedure Code, 1908 & Doctrine of Lis Pendens (Transfer of Property Act Section 52)",
+    criticality: "Critical",
+    tamilNaduContext: "Purchases made during pendency of partition or title suits are subject to the decree under Section 52."
+  },
+  {
+    id: 9,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Intervening Gap Period Nil Encumbrance Search",
+    description: "Fresh Nil EC taken for the exact period between previous deed registration and proposed deal closing date.",
+    statutoryBasis: "Registration Act, 1908",
+    criticality: "High",
+    tamilNaduContext: "Prevents intervening mortgage or second sale execution during transaction negotiations."
+  },
+  {
+    id: 10,
+    tier: 1,
+    tierTitle: "Tier 1: Root Title & 30-Year SRO Encumbrances",
+    title: "Absence of Cancellation or Unilateral Revocation Deeds",
+    description: "Scrutiny of previous settlement deeds to confirm absence of illegal unilateral cancellation deeds.",
+    statutoryBasis: "Full Bench Ruling of Madras High Court (Latif Estate Line of Precedents)",
+    criticality: "High",
+    tamilNaduContext: "Unilateral cancellation of gift or sale deed without court decree is declared invalid in Tamil Nadu."
+  },
+
+  // Tier 2: Revenue Records, Patta Mutation & Land Classification (11-20)
+  {
+    id: 11,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Computerized e-Patta with QR Code Verification",
+    description: "Verification of e-Patta downloaded from Any Tamil Nadu Revenue Portal (eservices.tn.gov.in).",
+    statutoryBasis: "Tamil Nadu Patta Pass Book Act, 1983 & Rules 1987",
+    criticality: "Critical",
+    tamilNaduContext: "QR code digital signature must validate directly against the Tamil Nadu State Data Centre (TNSDC) servers."
+  },
+  {
+    id: 12,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Patta Holder Name Matching Current Title Owner",
+    description: "Confirming that revenue patta has been mutated into current seller's name without mismatch in initials.",
+    statutoryBasis: "Tamil Nadu Patta Pass Book Act, 1983 (Section 3)",
+    criticality: "Critical",
+    tamilNaduContext: "If patta stands in third-party or deceased ancestor's name, mutation application must be processed before sale."
+  },
+  {
+    id: 13,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Chitta Extract (Soil & Crop Classification)",
+    description: "Inspection of Chitta register to confirm land type: Nanjai (Wet), Punjai (Dry), or Manavari.",
+    statutoryBasis: "Tamil Nadu Revenue Board Standing Orders (BSO 28)",
+    criticality: "High",
+    tamilNaduContext: "Determines whether agricultural conversion, DTCP approval, or Collector NOC is mandated for layout development."
+  },
+  {
+    id: 14,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Field Measurement Book (FMB) Sketch & Sub-Division",
+    description: "Inspection of FMB drawing displaying exact sub-division boundaries, ladder dimensions, and neighbor survey numbers.",
+    statutoryBasis: "Tamil Nadu Survey and Boundaries Act, 1923 (Section 9 & 10)",
+    criticality: "Critical",
+    tamilNaduContext: "Ground dimensions must match FMB within permissible survey tolerance; discrepancies lead to boundary disputes."
+  },
+  {
+    id: 15,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Verification Against Government Poramboke / Tharisu",
+    description: "Confirming that survey number is not recorded as Sarkar Poramboke, Vandi Paathai, Kuttai, or Meichal.",
+    statutoryBasis: "Tamil Nadu Land Encroachment Act, 1905",
+    criticality: "Critical",
+    tamilNaduContext: "Government poramboke lands cannot be alienated; registrations on poramboke are void ab initio."
+  },
+  {
+    id: 16,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Land Ceiling Act Compliance Verification",
+    description: "Verification that the land holding does not violate statutory limits under Land Reforms legislation.",
+    statutoryBasis: "Tamil Nadu Land Reforms (Fixation of Ceiling on Land) Act, 1961 (Act 58 of 1961)",
+    criticality: "High",
+    tamilNaduContext: "Applies to large agricultural holdings (>15 standard acres); surplus land declared by government cannot be sold."
+  },
+  {
+    id: 17,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Panchami / Depressed Class (DC) Land Verification",
+    description: "Verification that land was not granted to scheduled caste community members with alienation restrictions.",
+    statutoryBasis: "Board Standing Orders (BSO 15-41) & Supreme Court Directives",
+    criticality: "Critical",
+    tamilNaduContext: "Sale of Panchami land to non-depressed classes is illegal and liable for immediate government resumption without compensation."
+  },
+  {
+    id: 18,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Village 'A' Register Physical Audit",
+    description: "Cross-verification of village 'A' Register at Taluk/VAO office to verify original settlement classification.",
+    statutoryBasis: "Revenue Department Manual & UDR (Updating Registry Scheme)",
+    criticality: "High",
+    tamilNaduContext: "Detects fraudulent computerized patta generations that conflict with historical manual revenue entries."
+  },
+  {
+    id: 19,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Town Survey Land Register (TSLR) Extract for Urban Land",
+    description: "TSLR extract inspection for properties located within Municipal Corporations (Coimbatore, Chennai, Salem, Trichy).",
+    statutoryBasis: "Tamil Nadu Survey and Boundaries Act, 1923",
+    criticality: "Critical",
+    tamilNaduContext: "In urban corporation zones, TSLR Ward/Block/Town Survey Number supersedes rural survey numbers for legal registration."
+  },
+  {
+    id: 20,
+    tier: 2,
+    tierTitle: "Tier 2: Revenue Records, Patta & Government Registers",
+    title: "Land Revenue Tax (Kist) Receipts",
+    description: "Latest paid Kist receipts issued by Village Administrative Officer (VAO) confirming owner recognition.",
+    statutoryBasis: "Tamil Nadu Revenue Recovery Act, 1864",
+    criticality: "Standard",
+    tamilNaduContext: "Provides corroborative proof of uninterrupted revenue possession and absence of revenue arrears."
+  },
+
+  // Tier 3: Town Planning, Statutory Approvals & Buffers (21-30)
+  {
+    id: 21,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "DTCP / CMDA Layout Approval Sanction Order",
+    description: "Directorate of Town & Country Planning (DTCP) or CMDA sanctioned layout map with technical approval number.",
+    statutoryBasis: "Tamil Nadu Town and Country Planning Act, 1971 & Combined Development and Building Rules, 2019",
+    criticality: "Critical",
+    tamilNaduContext: "Unapproved plots cannot be registered under Section 22A of Registration Act without regularisation frame."
+  },
+  {
+    id: 22,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "TNRERA (Real Estate Regulatory Authority) Registration",
+    description: "TNRERA registration number for residential layouts exceeding 500 sq. meters or more than 8 plots/apartments.",
+    statutoryBasis: "Real Estate (Regulation and Development) Act, 2016 (Section 3)",
+    criticality: "High",
+    tamilNaduContext: "Mandatory consumer protection shielding buyers against developer defaults and unauthorized layout modifications."
+  },
+  {
+    id: 23,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "Local Body Panchayat / Municipal Building Approval",
+    description: "Building plan sanction and resolution from the Village Panchayat President or Municipal Commissioner.",
+    statutoryBasis: "Tamil Nadu Combined Development and Building Rules, 2019 (TNCDBR)",
+    criticality: "Critical",
+    tamilNaduContext: "Building constructed without local body sanction is liable for lock, seal, and demolition notices under Section 56."
+  },
+  {
+    id: 24,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "PWD Water Body & Water Course Buffer Setback",
+    description: "Minimum 15 meters setback from river/canal bank; 50 meters from PWD tank bund or lake foreshore.",
+    statutoryBasis: "TN Protection of Tanks and Eviction of Encroachment Act, 2007 & G.O. Ms. No. 138 (MAWS)",
+    criticality: "Critical",
+    tamilNaduContext: "No construction permitted within water course buffer; strict eviction without prior notice under High Court orders."
+  },
+  {
+    id: 25,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "TANGEDCO / TANTRANSCO High Tension (HT) Corridor Buffer",
+    description: "Statutory horizontal and vertical clearance from High Tension overhead power transmission lines (11kV to 400kV).",
+    statutoryBasis: "Central Electricity Authority (Safety Requirements) Regulations, 2010 (Rule 60/61)",
+    criticality: "Critical",
+    tamilNaduContext: "15 meters minimum buffer corridor required under 400kV lines; building plans strictly rejected under HT path."
+  },
+  {
+    id: 26,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "National / State Highway Statutory Setback Distance",
+    description: "Statutory setback from highway central line (minimum 40m for NH / 30m for SH) under ribbon development rules.",
+    statutoryBasis: "Control of National Highways (Land and Traffic) Act, 2002 & IRC 73-1980",
+    criticality: "High",
+    tamilNaduContext: "Unauthorized structures within highway boundary line are demolished during widening corridors without compensation."
+  },
+  {
+    id: 27,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "Southern Railway Track Safety Corridor Buffer",
+    description: "Minimum 30 meters setback distance from Southern Railway boundary line with mandatory Railway NOC.",
+    statutoryBasis: "Indian Railways Works Manual & TNCDBR 2019 (Rule 19)",
+    criticality: "High",
+    tamilNaduContext: "DTCP building permission requires written clearance from Railway Divisional Engineer (DEN) for railway-adjacent plots."
+  },
+  {
+    id: 28,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "Archaeological Survey of India (ASI) Monument Buffer",
+    description: "100-meter prohibited buffer (zero construction) and 200-meter regulated buffer from centrally protected monuments.",
+    statutoryBasis: "Ancient Monuments and Archaeological Sites and Remains (AMASR) Act, 2010",
+    criticality: "High",
+    tamilNaduContext: "Construction within 100 meters is an unbailable criminal offence; 100-300m requires National Monuments Authority NOC."
+  },
+  {
+    id: 29,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "Hill Area Conservation Authority (HACA) Clearances",
+    description: "Special HACA clearance for properties in notified hill taluks (Nilgiris, Valparai, Kodaikanal, Yercaud).",
+    statutoryBasis: "G.O. Ms. No. 44 (Housing and Urban Development Department)",
+    criticality: "High",
+    tamilNaduContext: "Geological survey, forest, and collector committee clearance mandatory before any site cutting or construction."
+  },
+  {
+    id: 30,
+    tier: 3,
+    tierTitle: "Tier 3: Town Planning, Statutory Approvals & Buffers",
+    title: "Open Space Reservation (OSR) & Road Gift Deed",
+    description: "Verification that 10% OSR and internal roads are formally gifted to local authority by registered gift deed.",
+    statutoryBasis: "TNCDBR 2019 Rule 37 & TN District Municipalities Act",
+    criticality: "Standard",
+    tamilNaduContext: "If promoter has not executed registered gift deed for roads, local body will refuse basic services (water, streetlights)."
+  },
+
+  // Tier 4: Physical Scrutiny, Possession & Municipal Clearances (31-40)
+  {
+    id: 31,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "On-Ground Physical Demarcation & Boundary Stones",
+    description: "Survey stones fixed at all corner points matching FMB survey measurements precisely.",
+    statutoryBasis: "Tamil Nadu Survey and Boundaries Act, 1923",
+    criticality: "Critical",
+    tamilNaduContext: "Physical inspection ensures seller is actually delivering the parcel described in schedule and not an adjacent lot."
+  },
+  {
+    id: 32,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "Undisturbed Peaceful Physical Possession",
+    description: "Confirming land is vacant, fenced, or occupied by legitimate owner without third-party trespassers or squatters.",
+    statutoryBasis: "Specific Relief Act, 1963 (Section 5 & 6)",
+    criticality: "Critical",
+    tamilNaduContext: "Possession is 9/10ths of the law; title without physical possession requires lengthy court ejectment suits."
+  },
+  {
+    id: 33,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "Approach Road Breadth & Legal Right of Way",
+    description: "Verification that property enjoys direct physical access to public road or registered easement pathway.",
+    statutoryBasis: "Indian Easements Act, 1882 & TNCDBR 2019 Rule 35",
+    criticality: "Critical",
+    tamilNaduContext: "Minimum 24 feet (7.2m) road width required for commercial/residential layout approval; landlocked plots are unsellable."
+  },
+  {
+    id: 34,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "Electricity Service Connection (TANGEDCO) Receipts",
+    description: "TANGEDCO consumer card, meter number, and latest electricity bill in current owner's name.",
+    statutoryBasis: "Tamil Nadu Electricity Distribution Code",
+    criticality: "Standard",
+    tamilNaduContext: "Confirms continuous habitation/possession and absence of unpaid electricity dues or compounding penalties."
+  },
+  {
+    id: 35,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "Property Tax Assessment Order & Paid Receipts",
+    description: "Municipal Corporation / Town Panchayat property tax assessment book and paid receipts up to current half-year.",
+    statutoryBasis: "Tamil Nadu Urban Local Bodies Act, 1998",
+    criticality: "Standard",
+    tamilNaduContext: "Ensures property is assessed for municipal tax and has no accumulated tax arrears that attach to the property."
+  },
+  {
+    id: 36,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "Water Supply & Sewerage Connection Receipts",
+    description: "TWAD Board / Corporation water supply and drainage connection deposit receipts and water tax payments.",
+    statutoryBasis: "Tamil Nadu Water Supply and Drainage Board Act, 1970",
+    criticality: "Standard",
+    tamilNaduContext: "Verifies lawful water connection and eliminates risk of illegal tap penalty disconnections."
+  },
+  {
+    id: 37,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "No Land Acquisition Notification (NHAI / SIPCOT / TIDCO)",
+    description: "Search in Government Gazettes for 4(1) or 6 notifications under Land Acquisition Acts.",
+    statutoryBasis: "Right to Fair Compensation and Transparency in Land Acquisition Act, 2013",
+    criticality: "Critical",
+    tamilNaduContext: "Lands notified for industrial parks (SIPCOT) or highway expansion cannot be transferred; compensation goes to state."
+  },
+  {
+    id: 38,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "HR&CE (Hindu Religious & Charitable Endowments) Scrutiny",
+    description: "Verification that land does not belong to temples or endowments under HR&CE jurisdiction.",
+    statutoryBasis: "Tamil Nadu HR&CE Act, 1959 (Section 22A of Registration Act)",
+    criticality: "Critical",
+    tamilNaduContext: "Sale of temple/Inam lands is legally prohibited; SROs reject registration immediately under Section 22A."
+  },
+  {
+    id: 39,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "Tamil Nadu Wakf Board Property Scrutiny",
+    description: "Verification that property is not registered in Wakf Board proscribed property registers.",
+    statutoryBasis: "Wakf Act, 1995 (Section 51 & 104A)",
+    criticality: "Critical",
+    tamilNaduContext: "Wakf properties are inalienable; transfers executed without Central/State Wakf Board sanction are null and void."
+  },
+  {
+    id: 40,
+    tier: 4,
+    tierTitle: "Tier 4: Physical Boundary, Possession & Clearances",
+    title: "Advocate Legal Title Opinion on Bar Council Letterhead",
+    description: "Formal, unambiguous written Legal Scrutiny Report signed and sealed by a practicing Bar Council advocate.",
+    statutoryBasis: "Advocates Act, 1961 & Banking Due Diligence Standards",
+    criticality: "Critical",
+    tamilNaduContext: "Advocate A.K. Saravanan (MS/1245/2005) issues definitive title certificate certifying marketable and unencumbered ownership."
+  }
+];
+---
+
+<BaseLayout
+  title="Interactive 40-Point Property Legal Checklist | AKS Property Checklist"
+  description="Audit any Tamil Nadu property against our comprehensive 40-point legal and revenue checklist. Verify 30-year EC, Patta, FMB, DTCP, and buffer zone compliances."
+>
+  <Header />
+
+  <main class="bg-slate-50 min-h-screen py-8 sm:py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb & Tag -->
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-6">
+        <nav class="flex items-center gap-2 text-xs font-semibold text-slate-500">
+          <a href="/" class="hover:text-blue-600">Home</a>
+          <span>/</span>
+          <span class="text-slate-900 font-bold">Interactive 40-Point Checklist</span>
+        </nav>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200">
+          <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          SOP Version 4.2 • Tamil Nadu Jurisdiction
+        </span>
+      </div>
+
+      <!-- Hero Header -->
+      <div class="bg-white rounded-2xl p-6 sm:p-10 border border-slate-200 shadow-xs mb-8">
+        <div class="max-w-3xl">
+          <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Interactive 40-Point Property Legal Checklist
+          </h1>
+          <p class="mt-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+            Every property transaction in Tamil Nadu carries revenue, registration, planning, and physical risks. Use this interactive legal audit workbench to test your property documents against Advocate A.K. Saravanan's proprietary 4-tier due diligence protocol.
+          </p>
+        </div>
+
+        <!-- Sticky Audit Scorecard Banner -->
+        <div class="mt-8 pt-6 border-t border-slate-100 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <div class="md:col-span-4 flex items-center gap-4">
+            <div class="relative w-16 h-16 flex-shrink-0 flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path
+                  class="text-slate-100"
+                  stroke-width="3.5"
+                  stroke="currentColor"
+                  fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+                <path
+                  id="score-circle"
+                  class="text-blue-600 transition-all duration-500"
+                  stroke-dasharray="0, 100"
+                  stroke-width="3.5"
+                  stroke-linecap="round"
+                  stroke="currentColor"
+                  fill="none"
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                />
+              </svg>
+              <div class="absolute text-center">
+                <span id="score-counter" class="text-sm font-black text-slate-900">0</span>
+                <span class="text-[10px] text-slate-400 block -mt-1">/ 40</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="text-xs text-slate-500 font-medium">Audit Compliance</div>
+              <div id="score-percent" class="text-xl font-extrabold text-slate-900">0% Checked</div>
+              <div id="risk-pill" class="inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">
+                Pending Verification
+              </div>
+            </div>
+          </div>
+
+          <div class="md:col-span-8 flex flex-wrap items-center justify-start md:justify-end gap-3">
+            <button
+              type="button"
+              id="select-all-btn"
+              class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
+            >
+              Select All Verified
+            </button>
+            <button
+              type="button"
+              id="reset-btn"
+              class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition"
+            >
+              Reset
+            </button>
+            <button
+              type="button"
+              onclick="window.print()"
+              class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center gap-1.5"
+            >
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              Print / Save PDF
+            </button>
+            <a
+              href="https://forms.gle/mT9ZcDYSV3GgiWAL6"
+              data-open-modal
+              data-service="40-Point Legal Due Diligence Audit"
+              class="px-5 py-2 text-xs font-bold rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition flex items-center gap-1.5 shadow-sm shadow-blue-500/20"
+            >
+              Book Advocate Audit
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tier Navigation Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar">
+        <button
+          type="button"
+          data-filter="all"
+          class="tier-tab-btn active px-4 py-2 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-xs whitespace-nowrap transition"
+        >
+          All 40 Points
+        </button>
+        <button
+          type="button"
+          data-filter="1"
+          class="tier-tab-btn px-4 py-2 rounded-lg text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 whitespace-nowrap transition"
+        >
+          Tier 1: Root Title & EC (1–10)
+        </button>
+        <button
+          type="button"
+          data-filter="2"
+          class="tier-tab-btn px-4 py-2 rounded-lg text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 whitespace-nowrap transition"
+        >
+          Tier 2: Patta & Revenue (11–20)
+        </button>
+        <button
+          type="button"
+          data-filter="3"
+          class="tier-tab-btn px-4 py-2 rounded-lg text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 whitespace-nowrap transition"
+        >
+          Tier 3: Town Planning & Buffers (21–30)
+        </button>
+        <button
+          type="button"
+          data-filter="4"
+          class="tier-tab-btn px-4 py-2 rounded-lg text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 whitespace-nowrap transition"
+        >
+          Tier 4: Physical & Clearances (31–40)
+        </button>
+      </div>
+
+      <!-- Checklist Items Grid -->
+      <div class="space-y-4" id="checklist-container">
+        {checklistItems.map((item) => (
+          <div
+            data-item-tier={item.tier}
+            class="checklist-card bg-white rounded-xl p-5 border border-slate-200 hover:border-slate-300 transition-all shadow-xs"
+          >
+            <div class="flex items-start gap-4">
+              <!-- Custom Checkbox -->
+              <div class="pt-0.5">
+                <label class="relative flex items-center justify-center w-6 h-6 rounded border border-slate-300 bg-white cursor-pointer hover:border-blue-500 transition-colors">
+                  <input
+                    type="checkbox"
+                    data-checkpoint-id={item.id}
+                    class="checkpoint-cb sr-only"
+                  />
+                  <svg class="check-icon w-4 h-4 text-blue-600 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                  </svg>
+                </label>
+              </div>
+
+              <!-- Content Area -->
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-xs font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                      #{item.id < 10 ? `0${item.id}` : item.id}
+                    </span>
+                    <h3 class="text-sm font-bold text-slate-900">{item.title}</h3>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <span class={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                      item.criticality === 'Critical'
+                        ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                        : item.criticality === 'High'
+                        ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                        : 'bg-slate-100 text-slate-700 border border-slate-200'
+                    }`}>
+                      {item.criticality}
+                    </span>
+                    <span class="text-[10px] font-medium text-slate-500 hidden sm:inline">
+                      {item.tierTitle.split(':')[0]}
+                    </span>
+                  </div>
+                </div>
+
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                  {item.description}
+                </p>
+
+                <!-- Legal Basis Callout -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                  <div>
+                    <span class="font-bold text-slate-700">Statutory Basis: </span>
+                    <span class="text-slate-500">{item.statutoryBasis}</span>
+                  </div>
+                  <div>
+                    <span class="font-bold text-slate-700">Tamil Nadu Context: </span>
+                    <span class="text-slate-500">{item.tamilNaduContext}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Legal Scrutiny Consultation CTA Card -->
+      <div class="mt-12 bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-2 text-center md:text-left">
+          <span class="px-2.5 py-0.5 rounded bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200">
+            Professional Scrutiny by Bar Council Advocate
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900">
+            Need Expert Scrutiny for High-Risk Property Papers?
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 max-w-xl">
+            Self-auditing is the first line of defense. But complex issues like missing parent deeds, minor co-parcenary rights, or unapproved layouts require an official legal opinion with Bar Council enrollment MS/1245/2005.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <a
+            href="/buffer-zone-calculator"
+            class="px-5 py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold text-center transition"
+          >
+            Check Buffer Zone Calculator &rarr;
+          </a>
+          <a
+            href="https://forms.gle/mT9ZcDYSV3GgiWAL6"
+            data-open-modal
+            data-service="40-Point Comprehensive Title Scrutiny"
+            class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold text-center transition shadow-xs shadow-blue-500/20"
+          >
+            Request Advocate Legal Opinion
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer />
+
+  <script>
+    const checkboxes = document.querySelectorAll<HTMLInputElement>('.checkpoint-cb');
+    const scoreCounter = document.getElementById('score-counter');
+    const scorePercent = document.getElementById('score-percent');
+    const scoreCircle = document.getElementById('score-circle');
+    const riskPill = document.getElementById('risk-pill');
+    const selectAllBtn = document.getElementById('select-all-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    const tierTabs = document.querySelectorAll<HTMLButtonElement>('.tier-tab-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.checklist-card');
+
+    function updateScore() {
+      let count = 0;
+      checkboxes.forEach(cb => {
+        const icon = cb.parentElement?.querySelector('.check-icon');
+        const card = cb.closest('.checklist-card');
+        if (cb.checked) {
+          count++;
+          icon?.classList.remove('hidden');
+          cb.parentElement?.classList.add('bg-blue-50', 'border-blue-600');
+          card?.classList.add('bg-blue-50/20', 'border-blue-200');
+        } else {
+          icon?.classList.add('hidden');
+          cb.parentElement?.classList.remove('bg-blue-50', 'border-blue-600');
+          card?.classList.remove('bg-blue-50/20', 'border-blue-200');
+        }
+      });
+
+      const total = checkboxes.length;
+      const percent = Math.round((count / total) * 100);
+
+      if (scoreCounter) scoreCounter.textContent = String(count);
+      if (scorePercent) scorePercent.textContent = `${percent}% Checked`;
+
+      if (scoreCircle) {
+        scoreCircle.setAttribute('stroke-dasharray', `${percent}, 100`);
+      }
+
+      if (riskPill) {
+        if (count === 0) {
+          riskPill.textContent = 'Pending Verification';
+          riskPill.className = 'inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600';
+        } else if (count >= 36) {
+          riskPill.textContent = 'Low Legal Risk • Title Sound';
+          riskPill.className = 'inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200';
+        } else if (count >= 25) {
+          riskPill.textContent = 'Moderate Risk • Legal Scrutiny Needed';
+          riskPill.className = 'inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200';
+        } else {
+          riskPill.textContent = 'High Legal Risk • Multiple Deficiencies';
+          riskPill.className = 'inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200';
+        }
+      }
+    }
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', updateScore);
+    });
+
+    selectAllBtn?.addEventListener('click', () => {
+      checkboxes.forEach(cb => cb.checked = true);
+      updateScore();
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      checkboxes.forEach(cb => cb.checked = false);
+      updateScore();
+    });
+
+    // Tier filtering
+    tierTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tierTabs.forEach(t => {
+          t.classList.remove('bg-blue-600', 'text-white', 'shadow-xs');
+          t.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+        });
+        tab.classList.add('bg-blue-600', 'text-white', 'shadow-xs');
+        tab.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+
+        const filter = tab.getAttribute('data-filter');
+        cards.forEach(card => {
+          const tier = card.getAttribute('data-item-tier');
+          if (filter === 'all' || filter === tier) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Initial calculation
+    updateScore();
+  </script>
+</BaseLayout>
+
